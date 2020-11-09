@@ -1,0 +1,15 @@
+// Your custom styles
+$brand-color: #603f06;
+$primary-color: $brand-color;
+
+.btn-primary {
+    background: $primary-color;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: lighten( $primary-color, 5%)!important;
+    }
+    &.active {
+        background-color: darken( $primary-color, 20%)!important;
+    }
+}

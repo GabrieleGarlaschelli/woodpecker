@@ -1,0 +1,9 @@
+.btn-primary {
+  background: #603f06;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #784f08 !important;
+}
+.btn-primary.active {
+  background-color: black !important;
+}
