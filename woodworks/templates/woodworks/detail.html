@@ -2,10 +2,23 @@
 
 {% block content %}
 
-  <div class="container-fluid" style="margin-top: 10px">
+  <div class="container-fluid" style="margin-top: 30px">
     <div class="row">
-      <div class="col">
-        <img src="/{{woodwork.main_image}}" class="img-fluid rounded" alt="Responsive image">
+      <div class="col-sm-6 col-12">
+        <img src="/{{woodwork.main_image}}" class="img-fluid border-rounded" alt="Responsive image">
+        <div style="margin-top: 10px">
+          <div style="float: left; border-radius: 5px; background-color: black;">
+            <img src="/{{woodwork.main_image}}" alt="thumbnail" class="img-thumbnail" style="height: 100px; opacity: 60%;">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-12">
+        <p class="h1">{{woodwork.title}}</p>
+        <hr/>
+        <div class="overflow-hidden">{{woodwork.description}}</div>
+        <div style="position: absolute; bottom: 0px; width: 100%;">
+          <button type="button" class="btn btn-primary border-rounded">Prenota</button>
+        </div>
       </div>
     </div>
   </div>

@@ -2,3 +2,7 @@
   color: aqua;
   font-size: large;
 }
+
+.border-rounded {
+  border-radius: 15px;
+}
