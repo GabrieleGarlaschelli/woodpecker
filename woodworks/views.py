@@ -9,4 +9,7 @@ def index(request):
 
 
 def detail(request, woodwork_id):
-    return HttpResponse("You're looking at woodwork %s." % woodwork_id)
+  woodwork = Woodwork.objects.get(pk=woodwork_id)
+  return render(request, 'woodworks/detail.html', {
+    'woodwork': woodwork
+  })

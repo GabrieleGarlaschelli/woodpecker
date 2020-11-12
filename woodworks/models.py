@@ -5,6 +5,7 @@ class Woodwork(models.Model):
   description = models.TextField()
   publication_date = models.DateTimeField()
   created_at = models.DateTimeField()
+  main_image = models.FileField(upload_to='woodworks/static/woodworks_image', null=True)
 
   class Meta:
     db_table = "woodworks"

@@ -107,6 +107,8 @@ media/
 *.db
 *.pid
 
+woodworks/static/woodworks_image/*
+
 # Ignore Django Migrations in Development if you are working on team
 
 # Only for Development only
