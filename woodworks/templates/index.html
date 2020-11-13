@@ -8,7 +8,7 @@
 {% block content %}
 
 <!--Carousel Wrapper-->
-  <div style="background-color: black; min-height: 90vh; max-height: 50vh;">
+  <div style="background-color: black; min-height: 80vh; height: 50vh;">
     <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" >
       <!--Indicators-->
       <ol class="carousel-indicators " >
@@ -20,9 +20,9 @@
       <!--Slides-->
       <div class="carousel-inner" role="listbox" style="margin: 0 auto;">
         {%   for ww in woodworks  %}  
-        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" id="slide{{ww.id}}">
-          <div class="view">
-              <img class=" w-50" src="/{{ww.main_image}}" style="margin: 0 auto;"
+        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %} border-rounded" id="slide{{ww.id}}">
+          <div class="view" style="margin-top: 2%; min-height: 70vh; height: 40vh; overflow: auto ;">
+              <img class=" w-50" src="/{{ww.main_image}}" style="margin: 0 auto; height: 400px; width: auto !important;"
                 alt="First slide">
               <div class="mask rgba-black-light"></div>
             </div>
