@@ -16,3 +16,6 @@ def detail(request, woodwork_id):
 
 def about_us(request): 
   return render(request, 'about_us.html')
+
+def user_detail(request): 
+  return render(request, 'user.html')
