@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block navbar %}
+  {% include 'navBar.html' with active_link="woodworks" %}
+{% endblock %}
+
 {% block content %}
 <!--Carousel Wrapper-->
   <div style="background-color: black; min-height: 90vh;"

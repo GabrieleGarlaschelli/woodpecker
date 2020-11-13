@@ -12,40 +12,7 @@
   <title>Woodpecker</title>
 </head>
 <body style="overflow-x: hidden;">
-  <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="min-height: 10vh">
-    <a class="navbar-brand" href="{% url 'index' %}">WoodPecker</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBar"
-      aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navBar">
-
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link border-rounded" href="#">Woodworks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link border-rounded" href="#">Chi siamo</a>
-        </li>
-      </ul>
-      
-      <div class="md-form my-0" style="color: white;">
-        <i class="fas fa-search prefix" style="color: white; font-size: 12pt; margin-top: 12px"></i>
-        <input type="text" placeholder="Search" id="searchBar" class="form-control default">
-      </div>
-    </div>
-
-    <style>
-      input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=search-md]:focus:not([readonly]), input[type=search]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=url]:focus:not([readonly]), textarea.md-textarea:focus:not([readonly]) {
-          border-bottom: 1px solid #ffffff !important;
-          box-shadow: 0 1px 0 0 #ffffff !important;
-          color: white !important;
-      }
-    </style>
-
-  </nav>
+  {% block navbar %}{% endblock %}
 
   {% block content %}{% endblock %}
 

@@ -13,3 +13,6 @@ def detail(request, woodwork_id):
   return render(request, 'woodworks/detail.html', {
     'woodwork': woodwork
   })
+
+def about_us(request): 
+  return render(request, 'about_us.html')
