@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+  {% include 'navBar.html' with active_link="about_us" %}
+{% endblock %}
+
+{% block content %}
+  <div class="cointainer m-3">
+    <div class="row">
+      <div class="col-sm-4 col-12">
+        <img src="/woodworks/static/woodworks_image/20160903_234254.jpg" class="img-fluid border-rounded" alt="Responsive image">
+      </div>
+      <div class="col-sm-8 col-12">
+        <h3 class="h3-responsive" style="text-align: center;">Emanuele Moia</h3>
+        <p style="text-align: center;"><em>This line rendered as italicized text.</em></p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

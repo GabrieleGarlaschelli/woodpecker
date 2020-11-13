@@ -12,54 +12,7 @@
   <title>Woodpecker</title>
 </head>
 <body style="overflow-x: hidden;">
-  <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="min-height: 10vh">
-    <a class="navbar-brand" href="#">WoodPecker</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="basicExampleNav">
-
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-
-      </ul>
-
-      <form class="form-inline">
-        <div class="md-form my-0">
-          <div class="md-form">
-            <i class="fas fa-envelope prefix"></i>
-            <input type="text" id="inputIconEx1" class="form-control">
-            <label for="inputIconEx1">E-mail address</label>
-          </div>
-        </div>
-      </form>
-    </div>
-
-  </nav>
+  {% block navbar %}{% endblock %}
 
   {% block content %}{% endblock %}
 
