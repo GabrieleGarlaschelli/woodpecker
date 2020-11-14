@@ -3,6 +3,7 @@
 
 {% block navbar %}
   {% include 'navBar.html' with active_link="woodworks" %}
+
 {% endblock %}
 
 {% block content %}
@@ -42,4 +43,6 @@
       <!--/.Controls-->
     </div>
   <!--/.Carousel Wrapper-->
-  {% endblock %}
+  
+{% include 'homepage/about_us_section.html' %}
+{% endblock %}
