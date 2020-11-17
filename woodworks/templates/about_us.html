@@ -2,27 +2,52 @@
 
 {% block navbar %}
   {% include 'navBar.html' with active_link="about_us" %}
+{% load static %}
+
 {% endblock %}
 
 {% block content %}
   <div class="cointainer m-3">
     <div class="row">
       <div class="col-sm-4 col-12">
-        <img src="/woodworks/static/woodworks_image/20160903_234254.jpg" class="img-fluid border-rounded" alt="Responsive image">
+        <img src="https://scontent-fco1-1.cdninstagram.com/v/t51.2885-15/e35/72974650_108938210483412_4829765356083328239_n.jpg?_nc_ht=scontent-fco1-1.cdninstagram.com&_nc_cat=100&_nc_ohc=MYfot2ybsV0AX_nmXMM&tp=18&oh=174184c8cd22855d6dda8ca00cc810d4&oe=5FD9C900" class="img-fluid border-rounded" alt="Responsive image">
       </div>
       <div class="col-sm-8 col-12">
-        <h3 class="h3-responsive mt-3" style="text-align: center;">Emanuele Moia</h3>
-        <p style="text-align: center;"><em>Una breve descrizione su Emanuele Moia, magari anche una citazione.</em></p>
+        <h3 id="wp1" class="h3-responsive mt-3" style="text-align: center;">Emanuele Moia</h3>
+        <p style="text-align: center;"><em>Ho 22 anni, studio scienze informatiche presso l'Unimore e sono responsabile Social Media in una società di basket in serie A2.<br>
+          Ho diverse passioni tra cui lavorare il legno e nei Woodpecker sono uno degli artigiani.</em></p>
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col-sm-8 col-12">
-        <h3 class="h3-responsive mt-3" style="text-align: center;">Gabriele Garlaschelli</h3>
-        <p style="text-align: center;"><em>Una breve descrizione su Gabriele Garlaschelli, magari anche una citazione.</em></p>
+        <h3 id="wp2" class="h3-responsive mt-3" style="text-align: center;">Gabriele Garlaschelli</h3>
+        <p style="text-align: center;"><em>Ho 22 anni, studio scienze informatiche presso l'Unimore e lavoro presso un'azienda informatica.<br>
+          Sono anche un allenatore di pallavolo. Tra le mie passioni quella più importante è la musica. Qui mi occupo della parte fotografica.</em></p>
       </div>
       <div class="col-sm-4 col-12">
-        <img src="/woodworks/static/woodworks_image/20160903_234254.jpg" class="img-fluid border-rounded"
+        <img src="https://scontent-fco1-1.cdninstagram.com/v/t51.2885-15/e35/72539240_765939627164542_8100581361103599775_n.jpg?_nc_ht=scontent-fco1-1.cdninstagram.com&_nc_cat=110&_nc_ohc=OVo3ERWWDioAX8WVb4v&tp=18&oh=c76e25d4ae4474c3e5eaca8266a875ce&oe=5FD8D164" class="img-fluid border-rounded"
+          alt="Responsive image">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-12">
+        <img src="https://scontent-fco1-1.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/62350339_2281333138797682_7800607694368761562_n.jpg?_nc_ht=scontent-fco1-1.cdninstagram.com&_nc_cat=110&_nc_ohc=VCDNviiIPnsAX9yQFl2&tp=15&oh=91989bfe0e04684fe3e19eb928e74cb5&oe=5FD7D17C" class="img-fluid border-rounded"
+          alt="Responsive image">
+      </div>
+      <div class="col-sm-8 col-12">
+        <h3 id="wp3" class="h3-responsive mt-3" style="text-align: center;">Mariachiara Manfredini</h3>
+        <p style="text-align: center;"><em>anni, professione,passione, ruolo nei wp</em></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-12">
+        <h3 id="wp4" class="h3-responsive mt-3" style="text-align: center;">Stefano Valla</h3>
+        <p style="text-align: center;"><em>Ho 22 anni, studio presso la Scuola internazionale di comics a Reggio Emilia.<br>
+          Il mio hobby preferito sono gli scacchi e nei Woodpecker sono l'altro artigiano e l'illustratore </em></p>
+      </div>
+      <div class="col-sm-4 col-12">
+        <img src="{% static 'woodworks_image/ste.jpg' %}" class="img-fluid border-rounded"
           alt="Responsive image">
       </div>
     </div>
