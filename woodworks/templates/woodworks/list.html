@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+  {% include 'navBar.html' with active_link="list" %}
+{% endblock %}
+
+{% block content %}
+  <div class="d-flex">
+    {% for woodwork in woodworks %}
+      <div style="max-width: 400px;">
+        {% include 'components/woodwork_card.html' with title=woodwork.title description=woodwork.description %}
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

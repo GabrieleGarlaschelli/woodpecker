@@ -14,6 +14,12 @@ def detail(request, woodwork_id):
     'woodwork': woodwork
   })
 
+def list(request):
+  woodworks = Woodwork.objects.order_by('created_at')
+  return render(request, 'woodworks/list.html', {
+    'woodworks': woodworks
+  })
+
 def about_us(request): 
   return render(request, 'about_us.html')
 
