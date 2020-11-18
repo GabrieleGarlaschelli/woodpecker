@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Woodwork
 
 def index(request):
-  woodworks = Woodwork.objects.order_by('created_at')
+  woodworks = Woodwork.objects.order_by('-publication_date')[:3]
   return render(request, 'index.html', {'woodworks': woodworks})
 
 
