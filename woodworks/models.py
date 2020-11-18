@@ -12,3 +12,8 @@ class Woodwork(models.Model):
 
   def __str__(self):
     return self.title + " - " + self.description
+
+  def _short_description(self):
+    return self.description[0:200]
+  
+  short_description = property(_short_description)

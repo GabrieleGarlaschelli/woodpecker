@@ -1,10 +1,33 @@
 <div class="card">
-  <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+  <img class="card-img-top" src="/{{woodwork.main_image}}" alt="Card image cap">
   <div class="card-body">
-    <h4 class="card-title"><a>{{title}}</a></h4>
-    <p class="card-text">
-      {{ description }}
+    <h4 class="card-title"><a>{{woodwork.title}}</a></h4>
+    <p class="card-text {{woodwork.id}}-woodwork-short-description-container">
+      {{ woodwork.short_description }}
+      {% if woodwork.short_description|length != woodwork.description|length %}
+        <span>... <a href="#" class="{{woodwork.id}}-woodwork-show-more" >Show more</a></span>
+      {% endif %}
     </p>
-    <a href="#" class="btn btn-primary">{{'Ordina'}}</a>
+    <p class="card-text {{woodwork.id}}-woodwork-long-description-container" style="display: none;">
+      {{ woodwork.description }}
+      <a href="#" class="{{woodwork.id}}-woodwork-show-less">Show less</a>
+    </p>
+    <a href="#" class="btn btn-primary">Ordina</a>
   </div>
 </div>
+
+<script>
+  $(".{{woodwork.id}}-woodwork-show-more").on('click', function (event) {
+    event.preventDefault()
+    console.log('bella')
+    $(".{{woodwork.id}}-woodwork-short-description-container").css('display','none')
+    $(".{{woodwork.id}}-woodwork-long-description-container").css('display', 'block')
+  })
+
+  $(".{{woodwork.id}}-woodwork-show-less").on('click', function (event) {
+    event.preventDefault()
+    console.log('bella')
+    $(".{{woodwork.id}}-woodwork-short-description-container").css('display', 'block')
+    $(".{{woodwork.id}}-woodwork-long-description-container").css('display', 'none')
+  })
+</script>

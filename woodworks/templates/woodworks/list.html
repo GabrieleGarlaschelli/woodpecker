@@ -5,11 +5,18 @@
 {% endblock %}
 
 {% block content %}
-  <div class="d-flex">
+  <div class="d-flex flex-wrap" style="width: 100vw; overflow-x: scroll;">
     {% for woodwork in woodworks %}
-      <div style="max-width: 400px;">
-        {% include 'components/woodwork_card.html' with title=woodwork.title description=woodwork.description %}
+      <div style="max-width: 400px; min-width: 300px" class="m-3">
+        {% include 'components/woodwork_card.html' with woodwork=woodwork %}
       </div>
     {% endfor %}
   </div>
+
+  <script>
+    // TODO unify javascript
+    $(document).ready(function () {
+      
+    })
+  </script>
 {% endblock %}
