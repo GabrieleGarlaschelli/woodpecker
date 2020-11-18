@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import Woodwork
 
@@ -14,6 +15,11 @@ def detail(request, woodwork_id):
     'woodwork': woodwork
   })
 
+@login_required
+def order(request, woodwork_id):
+  return render()
+
+
 def list(request):
   woodworks = Woodwork.objects.order_by('created_at')
   return render(request, 'woodworks/list.html', {
@@ -23,5 +29,6 @@ def list(request):
 def about_us(request): 
   return render(request, 'about_us.html')
 
+@login_required
 def user_detail(request): 
   return render(request, 'user.html')
