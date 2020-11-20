@@ -13,7 +13,7 @@
       <a href="#" class="{{woodwork.id}}-woodwork-show-less">Show less</a>
     </p>
     <span {% if user.is_authenticated == False %} data-toggle="tooltip" title="Accedi o registrati per ordinare!" {% endif %}>
-      <a href="{% url 'order' %}" class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</a>
+      <a href="{% url 'order' woodwork.id %}" class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</a>
     </span>
 
   </div>

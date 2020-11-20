@@ -8,6 +8,35 @@
   <div class="container-fluid mt-3" style="height: 200px; width: 100%;">
     <div class="row">
       <div class="col">
+        <h3>
+          Benvenuto, {{user.first_name}} {{user.last_name}} 
+          <button type="button" class="btn btn-primary py-1 px-2">
+            <i class="far fa-edit" aria-hidden="true"></i>
+          </button>
+        </h3>
+      </div>
+    </div>
+    <hr style="margin-top: 0px" />
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h6>I tuoi dati:</h6>
+        <div>
+          <ul class="list-group my-3">
+            <li class="list-group-item">
+              <span style="float: left">Compleanno</span><span style="float: right">{{user.birthday}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <h6>I tuoi indirizzi:</h6>
+        <div>
+        
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <h3>I miei ordini</h3>
       </div>
     </div>
@@ -32,4 +61,11 @@
       </div>
     </div>
   </div>
+
+  <style>
+    .list-group-item {
+      background-color: transparent !important;
+      padding: 5px;
+    }
+  </style>
 {% endblock %}
