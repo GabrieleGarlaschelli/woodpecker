@@ -1,0 +1,11 @@
+<form action="{% url 'update_user' %}" id="addressEditForm" method="POST">
+  {% csrf_token %}
+  <div class="md-form">
+    <input type="text" id="address" class="form-control" value="{{address.address}}">
+    <label for="address">Indirizzo</label>
+  </div>
+  <div class="md-form">
+    <input type="text" id="city" class="form-control" value="{{address.city}}">
+    <label for="city">Città</label>
+  </div>
+</form>

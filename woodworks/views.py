@@ -28,7 +28,3 @@ def list(request):
 
 def about_us(request): 
   return render(request, 'about_us.html')
-
-@login_required
-def user_detail(request): 
-  return render(request, 'user.html')

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+  {% include 'navBar.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid mt-3" style="height: 200px; width: 100%;">
+    <div class="row">
+      <div class="col">
+        <h3>
+          Benvenuto, {{user.first_name}} {{user.last_name}} 
+          <button type="button" class="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#editUser">
+            <i class="far fa-edit" aria-hidden="true"></i>
+          </button>
+          <div class="modal fade" id="editUser" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modifica Utente</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% include 'user_form.html' %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                  <button type="button" class="btn btn-primary border-rounded user-edit-submit-button">Salva</button>
+                </div>
+
+                <script>
+                  $('.datepicker').datepicker({
+                      format: "dd/mm/yyyy"
+                    });
+
+                  $('.user-edit-submit-button').on('click', function() {
+                    $("#userEditForm").submit()
+                  })
+                </script>
+              </div>
+            </div>
+          </div>
+        </h3>
+      </div>
+    </div>
+    <hr style="margin-top: 0px" />
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h6>I tuoi dati:</h6>
+        <div>
+          <ul class="list-group my-3">
+            <li class="list-group-item">
+              <span style="float: left">Email</span><span style="float: right">{{user.email}}</span>
+            </li>
+            <li class="list-group-item">
+              <span style="float: left">Username</span><span style="float: right">{{user.username}}</span>
+            </li>
+            <li class="list-group-item">
+              <span style="float: left">Compleanno</span><span style="float: right">{{user.customer.birthday}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-4">
+        <h6>I tuoi indirizzi:</h6>
+        <div class="d-flex flex-wrap">
+          {% for address in addresses %}
+            <div class="card address-color" style="max-width: 200px;">
+              <div class="card-body transparent p-2">
+                {{address.address}}, {{address.city}} ({{address.county}}), {{address.postal_code}}
+                {{address.firstname}} {{address.lastname}}
+              </div>
+              <div>
+                <span class="mr-2" style="float: right">
+                  <a href="#" style="color: grey" data-toggle="modal" data-target="#editAddress-{{address.id}}">
+                    <i class="far fa-edit" aria-hidden="true"></i>
+                  </a>
+                </span>
+              </div>
+              <div class="modal fade" id="editAddress-{{address.id}}" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Modifica Indirizzo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {% include 'address_form.html' with address=address %}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                      <button type="button" class="btn btn-primary border-rounded user-edit-submit-button">Salva</button>
+                    </div>
+              
+                    <script>
+                      $('.datepicker').datepicker({
+                        format: "dd/mm/yyyy"
+                      });
+
+                      $('.user-edit-submit-button').on('click', function () {
+                        $("#userEditForm").submit()
+                      })
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h3>I miei ordini</h3>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h4 class="card-title"><a>Card title</a></h4>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the bulk of the card's
+              content.
+            </p>
+            <a href="#" class="btn btn-primary">Button</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .list-group-item {
+      background-color: transparent !important;
+      padding: 5px;
+    }
+
+    .transparent {
+      background-color: transparent !important;
+    }
+
+    .address-color {
+      background-color: #f2e9df;
+    }
+  </style>
+{% endblock %}
