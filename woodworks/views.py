@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
+import datetime
 
 from .models import Woodwork
+from .models import Like
 
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
@@ -18,6 +20,22 @@ def detail(request, woodwork_id):
 @login_required
 def order(request, woodwork_id):
   return render()
+
+@login_required
+def is_liked(request, woodwork_id):
+  woodwork = Woodwork.objects.get(pk=woodwork_id)
+  return JsonResponse({'result': woodwork.is_liked(request.user)})
+
+@login_required
+def like(request, woodwork_id):
+  like = Like.objects.create(user=request.user, woodwork_id=woodwork_id, added_at=datetime.datetime.now())
+  like.save()
+  return JsonResponse({'result': True})
+
+@login_required
+def unlike(request, woodwork_id):
+  Like.objects.filter(user=request.user, woodwork_id=woodwork_id).delete()
+  return JsonResponse({'result': True})
 
 
 def list(request):

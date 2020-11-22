@@ -1,7 +1,7 @@
 <div class="card">
   <img class="card-img-top" src="/{{woodwork.main_image}}" alt="Card image cap">
   <div class="card-body">
-    <h4 class="card-title"><a>{{woodwork.title}}</a></h4>
+    <h4 class="card-title"><a class="go-to-detail-{{woodwork.id}}">{{woodwork.title}}</a></h4>
     <p class="card-text {{woodwork.id}}-woodwork-short-description-container">
       {{ woodwork.short_description }}
       {% if woodwork.short_description|length != woodwork.description|length %}
@@ -15,11 +15,71 @@
     <span {% if user.is_authenticated == False %} data-toggle="tooltip" title="Accedi o registrati per ordinare!" {% endif %}>
       <a href="{% url 'order' woodwork.id %}" class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</a>
     </span>
+    <span style="float: right;">
+      <button type="button" class="btn px-3" style="border: 0px; box-shadow: none !important;">
+        <i class="fas fa-heart liked-{{woodwork.id}}" aria-hidden="true"></i> 
+        <i class="far fa-heart unliked-{{woodwork.id}}" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn px-3 go-to-detail-{{woodwork.id}}" style="border: 0px; box-shadow: none !important;">
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      </button>
+    </span>
 
   </div>
 </div>
 
 <script>
+  $(document).ready(function() {
+    $(".liked-{{woodwork.id}}").hide()
+    $(".unliked-{{woodwork.id}}").hide()
+
+    {% if user.is_authenticated %}
+      $.ajax({
+        url: "{% url 'is_liked' woodwork.id %}",
+      }).done(function(data) {
+        if(data['result']) {
+          $(".liked-{{woodwork.id}}").show()
+          $(".unliked-{{woodwork.id}}").hide()
+        } else {
+          $(".unliked-{{woodwork.id}}").show()
+          $(".liked-{{woodwork.id}}").hide()
+        }
+      })
+    {% endif %}
+  });
+
+  $(".unliked-{{woodwork.id}}").on('click', function() {
+    $.ajax({
+      url: "{% url 'like' woodwork.id %}",
+    }).done(function (data) {
+      if (data['result']) {
+        $(".liked-{{woodwork.id}}").show()
+        $(".unliked-{{woodwork.id}}").hide()
+      } else {
+        $(".unliked-{{woodwork.id}}").show()
+        $(".liked-{{woodwork.id}}").hide()
+      }
+    })
+  })
+
+  $(".liked-{{woodwork.id}}").on('click', function () {
+    $.ajax({
+      url: "{% url 'unlike' woodwork.id %}",
+    }).done(function (data) {
+      if (data['result']) {
+        $(".liked-{{woodwork.id}}").hide()
+        $(".unliked-{{woodwork.id}}").show()
+      } else {
+        $(".unliked-{{woodwork.id}}").hide()
+        $(".liked-{{woodwork.id}}").show()
+      }
+    })
+  })
+
+  $(".go-to-detail-{{woodwork.id}}").on('click', function() {
+    window.location = "{% url 'woodwork_detail' woodwork.id %}"
+  })
+
   $(".{{woodwork.id}}-woodwork-show-more").on('click', function (event) {
     event.preventDefault()
     console.log('bella')

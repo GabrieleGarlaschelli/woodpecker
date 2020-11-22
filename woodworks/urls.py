@@ -8,6 +8,9 @@ urlpatterns = [
     path('list', views.list, name='list'),
     path('about_us', views.about_us, name='about_us'),
 
-    path('<int:woodwork_id>/', views.detail, name='detail'),
+    path('<int:woodwork_id>/', views.detail, name='woodwork_detail'),
     path('<int:woodwork_id>/order', views.order, name='order'),
+    path('<int:woodwork_id>/is_liked', views.is_liked, name='is_liked'),
+    path('<int:woodwork_id>/like', views.like, name='like'),
+    path('<int:woodwork_id>/unlike', views.unlike, name='unlike'),
 ]
