@@ -6,6 +6,7 @@ from django.urls import reverse
 import datetime
 
 from .models import Address
+from .models import Customer
 
 def logout_view(request):
   logout(request)
@@ -13,7 +14,11 @@ def logout_view(request):
 
 @login_required
 def user_detail(request): 
-  addresses = Address.objects.filter(customer__pk=request.user.id)
+  if Customer.objects.filter(user_id=request.user.id).count() == 0:
+    customer = Customer.objects.create(user_id=request.user.id)
+    customer.save()
+
+  addresses = Address.objects.filter(customer__pk=request.user.customer.id)
   return render(request, 'user.html', {
     "addresses": addresses
   })
@@ -27,11 +32,14 @@ def update_user(request):
   else:
     birthday = None
   
+  if Customer.objects.filter(user_id=request.user.id).count() == 0:
+    customer = Customer.objects.create(user_id=request.user.id)
+    customer.save()
+
   customer = request.user.customer
   customer.birthday = birthday
   customer.save()
 
-  addresses = Address.objects.filter(customer__pk=request.user.id)
   return redirect(reverse('user_detail'))
 
 @login_required
@@ -50,6 +58,10 @@ def update_address(request, address_id):
 
 @login_required
 def create_address(request):
+  if Customer.objects.filter(user_id=request.user.id).count() == 0:
+    customer = Customer.objects.create(user_id=request.user.id)
+    customer.save()
+    
   address = Address()
   address.customer = request.user.customer
   address.address = request.POST.get('address')
