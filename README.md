@@ -10,3 +10,5 @@ Il sito dei woodpecker
 - per invocare la shell di python python manage.py shell
 
 - creare un super user python manage.py createsuperuser
+
+-installare django allauth --> pipenv install django-allauth~=0.42.0

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from accounts.models import CustomUser
 
 class Woodwork(models.Model):
   title = models.TextField()
@@ -24,7 +25,7 @@ class Woodwork(models.Model):
 
 class Like(models.Model):
   woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE)
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
+  user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
   added_at = models.DateTimeField()
 
   class Meta:
