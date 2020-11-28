@@ -2,8 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    def __str__(self):
-        return self.email
+  liked_woodworks = models.ManyToManyField(to="woodworks.Woodwork", through="woodworks.Like")
+
+  def __str__(self):
+      return self.email
 
 class Customer(models.Model):
   user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
