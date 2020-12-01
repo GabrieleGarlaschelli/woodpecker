@@ -3,8 +3,9 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 import datetime
 
-from .models import Woodwork
-from .models import Like
+from .models import Woodwork, Like
+
+from woodworks.services.order import order_woodwork
 
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
@@ -19,7 +20,8 @@ def detail(request, woodwork_id):
 
 @login_required
 def order(request, woodwork_id):
-  return render()
+  success = order_woodwork(woodwork_id, request.user.customer.id)
+  return render(request, 'woodworks/order_successful.html')
 
 @login_required
 def is_liked(request, woodwork_id):
