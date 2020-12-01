@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-
+from register import views as v
 from . import views
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('update_user', views.update_user, name='update_user'),
     path('update_address/<int:address_id>', views.update_address, name='update_address'),
     path('create_address', views.create_address, name='create_address'),
+    path('register/',v.register, name="register"),
 ]

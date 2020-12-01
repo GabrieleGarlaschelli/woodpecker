@@ -8,12 +8,12 @@
 <div class="d-flex justify-content-center flex-wrap" style="width: 100vw; height: 90vh; overflow-x: scroll;">
   <form class="text-center border-rounded p-5" style="height: fit-content; margin: auto; min-width: 400px; border: solid 1px #9f9e9e" method="POST">
     {% csrf_token %}
-    <p class="h4 mb-4">Sign in</p>
+    <p class="h4 mb-4">Login</p>
     <input type="text" id="defaultLoginFormEmail" name="username" class="form-control mb-4" placeholder="E-mail">
     <input type="password" id="defaultLoginFormPassword" name="password" class="form-control mb-4" placeholder="Password">
     <div class="d-flex justify-content-around">
       <div>
-        <a href="">Forgot password?</a>
+        <a href="">Password dimenticata?</a>
       </div>
     </div>
     {% if form.errors %}
@@ -21,6 +21,6 @@
         Email o password non corretti
       </p>
     {% endif %}
-    <button class="btn btn-primary btn-block my-4 border-rounded" type="submit">Sign in</button>
+    <button class="btn btn-primary btn-block my-4 border-rounded" type="submit">Accedi</button>
 </div>
 {% endblock %}
