@@ -5,8 +5,8 @@ from django.utils.dateparse import parse_date
 from django.urls import reverse
 import datetime
 
-from .models import Address
-from .models import Customer
+from .models import Address, Customer
+from woodworks.models import Order
 
 def logout_view(request):
   logout(request)
@@ -14,13 +14,16 @@ def logout_view(request):
 
 @login_required
 def user_detail(request): 
+  # TODO create customer on registration
   if Customer.objects.filter(user_id=request.user.id).count() == 0:
     customer = Customer.objects.create(user_id=request.user.id)
     customer.save()
 
   addresses = Address.objects.filter(customer__pk=request.user.customer.id)
+  orders = Order.objects.filter(customer__pk=request.user.customer.id)
   return render(request, 'user.html', {
-    "addresses": addresses
+    "addresses": addresses,
+    "orders": orders
   })
 
 @login_required
@@ -58,6 +61,7 @@ def update_address(request, address_id):
 
 @login_required
 def create_address(request):
+  # TODO create customer on registration
   if Customer.objects.filter(user_id=request.user.id).count() == 0:
     customer = Customer.objects.create(user_id=request.user.id)
     customer.save()

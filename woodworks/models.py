@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from accounts.models import CustomUser
+from accounts.models import CustomUser, Customer
 
 class Woodwork(models.Model):
   title = models.TextField()
@@ -33,3 +32,33 @@ class Like(models.Model):
 
   def __str__(self):
     return "%s - %s" % (self.user, self.woodwork)
+
+
+class Order(models.Model):
+  RECEIVED = 'received'
+  CONFIRMED = 'confirmed'
+  PENDING = 'pending'
+  DONE = 'done'
+  DELIVERED = 'delivered'
+
+  STATUSES = [
+    (RECEIVED, 'Ricevuto'),
+    (CONFIRMED, 'Confermato'),
+    (PENDING, 'Lavoro in corso'),
+    (DONE, 'Fatto, in attesa di consegna'),
+    (DELIVERED, 'Consegnato'),
+  ]
+
+  # il woodwork può essere nullo nel caso di ordini custom
+  woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE, null=True)
+  customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+  order_at = models.DateTimeField()
+  status = models.TextField(
+    max_length=255,
+    choices=STATUSES,
+    default=RECEIVED
+  )
+  notes = models.TextField()
+
+  def __str__(self):
+    return "%s - %s" % (self.customer, self.woodwork)
