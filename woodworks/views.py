@@ -20,7 +20,10 @@ def detail(request, woodwork_id):
 
 @login_required
 def order(request, woodwork_id):
-  success = order_woodwork(woodwork_id, request.user.customer.id)
+  notes = request.POST.get('notes')
+  quantity = request.POST.get('quantity')
+  expiration_date = request.POST.get('expiration_date')
+  success = order_woodwork(woodwork_id, request.user.customer.id, notes, quantity, expiration_date)
   return render(request, 'woodworks/order_successful.html')
 
 @login_required

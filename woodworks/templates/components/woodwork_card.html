@@ -13,7 +13,7 @@
       <a href="#" class="{{woodwork.id}}-woodwork-show-less">Show less</a>
     </p>
     <span {% if user.is_authenticated == False %} data-toggle="tooltip" title="Accedi o registrati per ordinare!" {% endif %}>
-      <a href="{% url 'order' woodwork.id %}" class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</a>
+      <button data-toggle="modal" data-target="#order-{{woodwork.id}}" class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</button>
     </span>
     <span style="float: right;">
       <button type="button" class="btn px-3" style="border: 0px; box-shadow: none !important;">
@@ -24,7 +24,74 @@
         <i class="fas fa-chevron-right" aria-hidden="true"></i>
       </button>
     </span>
+  </div>
+</div>
 
+<div class="modal fade" id="order-{{woodwork.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ordina {{woodwork.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'order' woodwork.id %}" id="{{woodwork.id}}-order-form">
+          {% csrf_token %}
+          <div class="container-fluid">
+            <div class="row align-items-center">
+              <div class="col-3">
+                Quantità
+              </div>
+              <div class="col-9">
+                <select name="quantity" required class="browser-default custom-select">
+                  <option value="1">Uno</option>
+                  <option value="2">Due</option>
+                  <option value="3">Tre</option>
+                  <option value="3">Quattro</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <div class="md-form">
+                  <textarea id="notes-{{woodwork.id}}" class="md-textarea form-control grey-text" style="color: #2d2d2dc8 !important;" rows="3"></textarea>
+                  <label for="notes-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Note sulla realizzazione</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="md-form">
+                  <div class="input-group">
+                    <input type="text" id="expiration-{{woodwork.id}}" name="expiration_date" class="form-control datepicker">
+                    <label for="expiration-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Entro il</label>
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+        <button class="btn btn-primary border-rounded {{woodwork.id}}-order-submit-button">Conferma ordine</button>
+      </div>
+
+      <script>
+        $('.datepicker').datepicker({
+          format: "dd/mm/yyyy"
+        });
+
+        $('.{{woodwork.id}}-order-submit-button').on('click', function () {
+          $("#{{woodwork.id}}-order-form").submit()
+        })
+      </script>
+    </div>
   </div>
 </div>
 
