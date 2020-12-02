@@ -1,37 +1,34 @@
-<!-- Horizontal Steppers -->
 <div class="row">
   <div class="col-md-12">
-
-    <!-- Stepers Wrapper -->
-    <ul class="stepper stepper-horizontal">
-
-      <!-- First Step -->
-      <li class="completed">
-        <a href="#!">
-          <span class="circle">1</span>
-          <span class="label">First step</span>
-        </a>
-      </li>
-
-      <!-- Second Step -->
-      <li class="active">
-        <a href="#!">
-          <span class="circle">2</span>
-          <span class="label">Second step</span>
-        </a>
-      </li>
-
-      <!-- Third Step -->
-      <li class="warning">
-        <a href="#!">
-          <span class="circle"><i class="fas fa-exclamation"></i></span>
-          <span class="label">Third step</span>
-        </a>
-      </li>
-
-    </ul>
-    <!-- /.Stepers Wrapper -->
-
+    <!-- # TODO use constant from models -->
+    {% for order in orders %}
+      <ul class="stepper stepper-horizontal my-0">
+        <li class="{% if order.status == 'received' %} active {% endif %}">
+          <a href="#">
+            <span class="label">Ricevuto</span>
+          </a>
+        </li>
+        <li class="{% if order.status == 'confirmed' %} active {% endif %}">
+          <a href="#">
+            <span class="label">Confermato</span>
+          </a>
+        </li>
+        <li class="{% if order.status == 'pending' %} active {% endif %}">
+          <a href="#">
+            <span class="label">Lavoro in corso</span>
+          </a>
+        </li>
+        <li class="{% if order.status == 'done' %} active {% endif %}">
+          <a href="#">
+            <span class="label">Fatto, in attesa di consegna</span>
+          </a>
+        </li>
+        <li class="{% if order.status == 'delivered' %} active {% endif %}">
+          <a href="#">
+            <span class="label">Consegnato</span>
+          </a>
+        </li>
+      </ul>
+    {% endfor %}
   </div>
 </div>
-<!-- /.Horizontal Steppers -->
