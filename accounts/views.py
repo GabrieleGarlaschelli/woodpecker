@@ -9,6 +9,7 @@ import datetime
 from .forms import UserRegisterForm
 from .models import Address, Customer
 from woodworks.models import Order
+from  accounts.email_backend import EmailBackend 
 
 def register_view(request):
     next = request.GET.get('next')
