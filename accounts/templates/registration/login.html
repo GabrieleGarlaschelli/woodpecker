@@ -13,7 +13,7 @@
     <input type="password" id="defaultLoginFormPassword" name="password" class="form-control mb-4" placeholder="Password">
     <div class="d-flex justify-content-around">
       <div>
-        <a href="">Forgot password?</a>
+        <a href="">Password dimenticata?</a>
       </div>
     </div>
     {% if form.errors %}
@@ -22,5 +22,10 @@
       </p>
     {% endif %}
     <button class="btn btn-primary btn-block my-4 border-rounded" type="submit">Sign in</button>
+    <div class="d-flex justify-content-around" style="position: relative; top: 8px; left: 150px;">
+      <div>
+        <a href="{% url 'register' %}">Registrati</a>
+      </div>
+    </div>
 </div>
 {% endblock %}

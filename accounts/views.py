@@ -1,12 +1,30 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
 from django.utils.dateparse import parse_date
 from django.urls import reverse
 import datetime
-
+from .forms import UserRegisterForm
 from .models import Address, Customer
 from woodworks.models import Order
+
+def register_view(request):
+    next = request.GET.get('next')
+    title = 'Registrazione'
+    form = UserRegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        user.set_password(password)
+        user.save()
+        new_user = authenticate(username=user.username, password=user.password)
+        login(request, new_user)
+        if next:
+            return redirect(next)
+        return redirect('/')
+    return render(request, 'registration/register.html', {'form': form, 'title': title})
 
 def logout_view(request):
   logout(request)

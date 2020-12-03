@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+  {% include 'navBar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-wrap" style="width: 100vw; height: 90vh; overflow-x: scroll;">
+  <form action="{% url 'register' %" class="text-center border-rounded p-5" style="height: fit-content; margin: auto; min-width: 400px; border: solid 1px #9f9e9e" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button id="submit" type="submit">Registrati</button>
+  </form>
+</div>
+{% endblock %}
