@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import CustomUser, Customer
+from accounts.models import CustomUser, Customer, Address
 
 class Woodwork(models.Model):
   title = models.TextField()
@@ -50,15 +50,18 @@ class Order(models.Model):
   ]
 
   # il woodwork può essere nullo nel caso di ordini custom
-  woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE, null=True)
+  woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE, null=True, blank=True)
   customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+  to_address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
   order_at = models.DateTimeField()
   status = models.TextField(
     max_length=255,
     choices=STATUSES,
     default=RECEIVED
   )
-  notes = models.TextField()
+  notes = models.TextField(null=True, blank=True)
+  quantity = models.IntegerField(default=1)
+  expiration_on = models.DateTimeField(null=True, blank=True)
 
   def __str__(self):
     return "%s - %s" % (self.customer, self.woodwork)
