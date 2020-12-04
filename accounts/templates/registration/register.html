@@ -9,7 +9,7 @@
   <form class="text-center border-rounded p-5" style="height: fit-content; margin: auto; min-width: 400px; border: solid 1px #9f9e9e" method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button id="submit" type="submit">Registrati</button>
+    <button id="submit" class="btn btn-primary border-rounded" type="submit">Registrati</button>
   </form>
 </div>
 {% endblock %}

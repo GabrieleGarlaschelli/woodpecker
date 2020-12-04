@@ -1,34 +1,39 @@
-<div class="row">
-  <div class="col-md-12">
-    <!-- # TODO use constant from models -->
-    {% for order in orders %}
-      <ul class="stepper stepper-horizontal my-0">
-        <li class="{% if order.status == 'received' %} active {% endif %}">
-          <a href="#">
-            <span class="label">Ricevuto</span>
-          </a>
-        </li>
-        <li class="{% if order.status == 'confirmed' %} active {% endif %}">
-          <a href="#">
-            <span class="label">Confermato</span>
-          </a>
-        </li>
-        <li class="{% if order.status == 'pending' %} active {% endif %}">
-          <a href="#">
-            <span class="label">Lavoro in corso</span>
-          </a>
-        </li>
-        <li class="{% if order.status == 'done' %} active {% endif %}">
-          <a href="#">
-            <span class="label">Fatto, in attesa di consegna</span>
-          </a>
-        </li>
-        <li class="{% if order.status == 'delivered' %} active {% endif %}">
-          <a href="#">
-            <span class="label">Consegnato</span>
-          </a>
-        </li>
-      </ul>
-    {% endfor %}
-  </div>
+<div class="container-fluid">
+  {% for order in orders %}
+    <div class="row">
+      <div class="col-md-2">
+        {% include 'components/simple_woodwork_card.html' with woodwork=order.woodwork %}
+      </div>
+      <div class="col-md-10">
+        <!-- # TODO use constant from models -->
+        <ul class="stepper stepper-horizontal my-0">
+          <li class="{% if order.status == 'received' %} active {% endif %}">
+            <a href="#">
+              <span class="label">Ricevuto</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'confirmed' %} active {% endif %}">
+            <a href="#">
+              <span class="label">Confermato</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'pending' %} active {% endif %}">
+            <a href="#">
+              <span class="label">Lavoro in corso</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'done' %} active {% endif %}">
+            <a href="#">
+              <span class="label">Fatto, in attesa di consegna</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'delivered' %} active {% endif %}">
+            <a href="#">
+              <span class="label">Consegnato</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  {% endfor %}
 </div>

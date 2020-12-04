@@ -1,0 +1,12 @@
+<div class="card">
+  <img class="card-img-top" src="/{{woodwork.main_image}}" alt="Card image cap">
+  <div class="card-body">
+    <h4 class="card-title text-center" style="font-size: medium;"><a class="go-to-detail-{{woodwork.id}}">{{woodwork.title}}</a></h4>
+  </div>
+</div>
+
+<script>
+  $(".go-to-detail-{{woodwork.id}}").on('click', function() {
+    window.location = "{% url 'woodwork_detail' woodwork.id %}"
+  })
+</script>
