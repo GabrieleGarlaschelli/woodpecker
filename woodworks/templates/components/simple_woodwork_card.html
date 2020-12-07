@@ -1,7 +1,27 @@
 <div class="card">
   <img class="card-img-top" src="/{{woodwork.main_image}}" alt="Card image cap">
   <div class="card-body">
-    <h4 class="card-title text-center" style="font-size: medium;"><a class="go-to-detail-{{woodwork.id}}">{{woodwork.title}}</a></h4>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <h4 class="card-title text-center mt-2" style="font-size: medium; width: fit-content; float: left;"><a class="go-to-detail-{{woodwork.id}}">{{woodwork.title}}</a></h4>
+        </div>
+        <div class="col col-md-auto">
+          <div class="dropdown" style="width: fit-content; float: left;">
+            <button class="btn border-rounded p-1" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="box-shadow: 0 0 black;"><i class="fas fa-ellipsis-v"></i></button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+              <a class="dropdown-item" href="#">Modifica indirizzo</a>
+              <a class="dropdown-item" href="#">Annulla ordine</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container">
+          <span id="ratings-{{woodwork.id}}"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -9,4 +29,8 @@
   $(".go-to-detail-{{woodwork.id}}").on('click', function() {
     window.location = "{% url 'woodwork_detail' woodwork.id %}"
   })
+
+  $(document).ready(function() {
+    $('#ratings-{{woodwork.id}}').mdbRate();
+  });
 </script>
