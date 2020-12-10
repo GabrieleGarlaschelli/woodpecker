@@ -37,45 +37,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{% url 'order' woodwork.id %}" id="{{woodwork.id}}-order-form">
-          {% csrf_token %}
-          <div class="container-fluid">
-            <div class="row align-items-center">
-              <div class="col-3">
-                Quantità
-              </div>
-              <div class="col-9">
-                <select name="quantity" required class="browser-default custom-select">
-                  <option value="1">Uno</option>
-                  <option value="2">Due</option>
-                  <option value="3">Tre</option>
-                  <option value="3">Quattro</option>
-                </select>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <div class="md-form">
-                  <textarea id="notes-{{woodwork.id}}" class="md-textarea form-control grey-text" style="color: #2d2d2dc8 !important;" rows="3"></textarea>
-                  <label for="notes-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Note sulla realizzazione</label>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="md-form">
-                  <div class="input-group">
-                    <input type="text" id="expiration-{{woodwork.id}}" name="expiration_date" class="form-control datepicker">
-                    <label for="expiration-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Entro il</label>
-                    <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+        {% include 'woodworks/order_form.html' with woodwork=woodwork %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
