@@ -34,12 +34,17 @@
             <div class="modal-footer">
               <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
               <button type="button"
+                data-dismiss="modal"
                 class="btn btn-primary border-rounded rate-woodwork-submit-button-{{woodwork.id}}">Salva</button>
             </div>
       
             <script>
               $('.rate-woodwork-submit-button-{{woodwork.id}}').on('click', function () {
-                $("#rateWoodwork-{{woodwork.id}}").submit()
+                var params = {}
+                params['rating'] = $("#ratings-1").find('.amber-text').length
+                params['comment'] = $("#rate-comment-{{woodwork.id}}").val() 
+
+                console.log(params)
               })
             </script>
           </div>

@@ -1,5 +1,10 @@
 <span id="ratings-{{woodwork.id}}"></span>
 
+<div class="md-form">
+  <textarea id="rate-comment-{{woodwork.id}}" class="md-textarea form-control grey-text" style="color: #2d2d2dc8 !important;" rows="3"></textarea>
+  <label for="rate-comment-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Commento</label>
+</div>
+
 <script>
   $(document).ready(function() {
     $('#ratings-{{woodwork.id}}').mdbRate();
