@@ -11,14 +11,38 @@
             <button class="btn border-rounded p-1" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="box-shadow: 0 0 black;"><i class="fas fa-ellipsis-v"></i></button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
               <a class="dropdown-item" href="#">Modifica indirizzo</a>
+              <bbutton class="dropdown-item" data-toggle="modal" data-target="#rateWoodwork-{{woodwork.id}}">Lascia una recensione</bbutton>
               <a class="dropdown-item" href="#">Annulla ordine</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="container">
-          <span id="ratings-{{woodwork.id}}"></span>
+
+      <!-- ratings -->
+      <div class="modal fade" id="rateWoodwork-{{woodwork.id}}" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Lascia una recensione</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              {% include 'woodworks/ratings_form.html' with woodwork=woodwork %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+              <button type="button"
+                class="btn btn-primary border-rounded rate-woodwork-submit-button-{{woodwork.id}}">Salva</button>
+            </div>
+      
+            <script>
+              $('.rate-woodwork-submit-button-{{woodwork.id}}').on('click', function () {
+                $("#rateWoodwork-{{woodwork.id}}").submit()
+              })
+            </script>
+          </div>
         </div>
       </div>
     </div>
@@ -29,8 +53,4 @@
   $(".go-to-detail-{{woodwork.id}}").on('click', function() {
     window.location = "{% url 'woodwork_detail' woodwork.id %}"
   })
-
-  $(document).ready(function() {
-    $('#ratings-{{woodwork.id}}').mdbRate();
-  });
 </script>
