@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 import datetime
 
-from .models import Woodwork, Like
+from .models import Woodwork, Like, Rating
 
 from woodworks.services.order import order_woodwork
+from woodworks.services.rate import rate_woodwork
 
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
@@ -14,9 +16,20 @@ def index(request):
 
 def detail(request, woodwork_id):
   woodwork = Woodwork.objects.get(pk=woodwork_id)
+  ratings = Rating.objects.filter(woodwork__pk=woodwork_id)
+
+  average_rating = Rating.objects.filter(woodwork__pk=woodwork_id).aggregate(average_rating=Avg('rate'))
   return render(request, 'woodworks/detail.html', {
-    'woodwork': woodwork
+    'woodwork': woodwork,
+    'ratings': ratings,
+    'avarage_rating': average_rating['average_rating']
   })
+
+def rate(request, woodwork_id):
+  rate = request.POST.get('rate')
+  comment = request.POST.get('comment')
+  success = rate_woodwork(woodwork_id, request.user.customer.id, rate, comment)
+  return JsonResponse({'success': success})
 
 @login_required
 def order(request, woodwork_id):

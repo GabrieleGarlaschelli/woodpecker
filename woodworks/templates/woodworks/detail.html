@@ -22,10 +22,144 @@
         <div class="overflow-hidden">{{woodwork.description}}</div>
         <div class="down-section">
           <button type="button" class="btn btn-primary border-rounded">Ordina</button>
+          <button type="button" class="btn px-3" style="border: 0px; box-shadow: none !important;">
+            <i class="fas fa-heart liked-{{woodwork.id}}" aria-hidden="true"></i>
+            <i class="far fa-heart unliked-{{woodwork.id}}" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
+  <div class="container-fluid">
+    <hr />
+    <div class="row">
+      <div class="col-sm-3 col-12">
+        <h3 style="font-weight: 500;">Recensioni clienti</h3>
+        <div>
+          <span class="woodwork-ratings" data-rating-value="{{avarage_rating}}"></span>
+          <span style="margin-left: 10px">{{avarage_rating}} su 5</span>
+        </div>
+        <button class="btn btn-primary border-rounded" data-toggle="modal" data-target="#rateWoodwork-{{woodwork.id}}">Recensisci</button>
+        <div class="modal fade" id="rateWoodwork-{{woodwork.id}}" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Lascia una recensione</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                {% include 'woodworks/ratings_form.html' with woodwork=woodwork %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                <button type="button" data-dismiss="modal"
+                  class="btn btn-primary border-rounded rate-woodwork-submit-button-{{woodwork.id}}">Salva</button>
+              </div>
+        
+              <script>
+                $('.rate-woodwork-submit-button-{{woodwork.id}}').on('click', function () {
+                  var params = {}
+                  params['rate'] = $("#ratings-{{woodwork.id}}").find('.amber-text').length
+                  params['comment'] = $("#rate-comment-{{woodwork.id}}").val()
+                  params['csrfmiddlewaretoken'] = $($('.csrf-token-{{woodwork.id}}').children()[0]).val()
+
+                  $.ajax({
+                    url: "{% url 'rate' woodwork.id %}",
+                    method: "POST",
+                    data: params
+                  }).done(function(data) {
+                    window.location.reload
+                  })
+                })
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9 col-12">
+        {% if ratings|length > 0 %}
+          {% for rating in ratings %}
+            <div class="d-flex align-content-center flex-wrap">
+              <i class="fas fa-user-circle" style="font-size: 25pt;"></i> 
+              <div style="width: fit-content; margin-left: 10px; font-weight: 500;">{{rating.customer.fullname}}</div>
+            </div>
+            <div>
+              <span class="woodwork-ratings" data-rating-value="{{rating.rate}}"></span>
+            </div>
+            <div class="my-3">
+              {{rating.comment}}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="text-center">
+            Nessuna recesione
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $(".liked-{{woodwork.id}}").hide()
+      $(".unliked-{{woodwork.id}}").hide()
+
+      {% if user.is_authenticated %}
+        $.ajax({
+          url: "{% url 'is_liked' woodwork.id %}",
+        }).done(function (data) {
+          if (data['result']) {
+            $(".liked-{{woodwork.id}}").show()
+            $(".unliked-{{woodwork.id}}").hide()
+          } else {
+            $(".unliked-{{woodwork.id}}").show()
+            $(".liked-{{woodwork.id}}").hide()
+          }
+        })
+      {% endif %}
+    });
+
+    $(".unliked-{{woodwork.id}}").on('click', function () {
+      $.ajax({
+        url: "{% url 'like' woodwork.id %}",
+      }).done(function (data) {
+        if (data['result']) {
+          $(".liked-{{woodwork.id}}").show()
+          $(".unliked-{{woodwork.id}}").hide()
+        } else {
+          $(".unliked-{{woodwork.id}}").show()
+          $(".liked-{{woodwork.id}}").hide()
+        }
+      })
+    })
+
+    $(document).ready(function () {
+      $('.woodwork-ratings').mdbRate();
+      $('.woodwork-ratings').each(function(index) {
+        var rating_value = $(this).attr('data-rating-value')
+        if(rating_value != null && rating_value != undefined) {
+          $(this).children().each(function (counter) {
+            var current_rating = $(this).attr('data-index');
+            if (parseInt(rating_value) >= parseInt(current_rating) + 1) {
+              $(this).addClass('amber-text')
+            }
+            $(this).unbind()
+          })
+        }
+      })
+      // $('.woodwork-ratings > i').unbind();
+    });
+
+    // $('.rate-woodwork-submit-button-{{woodwork.id}}').on('click', function () {
+    //   var params = {}
+    //   params['rating'] = $("#ratings-1").find('.amber-text').length
+    //   params['comment'] = $("#rate-comment-{{woodwork.id}}").val()
+
+    //   console.log(params)
+    // })
+  </script>
 
   <style>
     @media (min-width: 576px) {

@@ -13,6 +13,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
     crossorigin="anonymous" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
   <title>Woodpecker</title>
 </head>
@@ -28,6 +29,8 @@
     integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ=="
     crossorigin="anonymous"></script>
   <script src="{% static 'js/addons/rating.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
   <script>
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
@@ -37,5 +40,11 @@
   {% block navbar %}{% endblock %}
 
   {% block content %}{% endblock %}
+
+  <footer class="footer">
+    <div style="padding-top: 30px; padding-bottom: 30px; color: #7d7d7d; font-size: 12px;" class="text-center">
+      Copyright © 2020 Woodpecker, All Rights Reserved.
+    </div>
+  </footer>
 </body>
 </html>

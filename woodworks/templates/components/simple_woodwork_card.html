@@ -40,12 +40,19 @@
       
             <script>
               $('.rate-woodwork-submit-button-{{woodwork.id}}').on('click', function () {
-                var params = {}
-                params['rating'] = $("#ratings-1").find('.amber-text').length
-                params['comment'] = $("#rate-comment-{{woodwork.id}}").val() 
+                  var params = {}
+                  params['rate'] = $("#ratings-{{woodwork.id}}").find('.amber-text').length
+                  params['comment'] = $("#rate-comment-{{woodwork.id}}").val()
+                  params['csrfmiddlewaretoken'] = $($('.csrf-token-{{woodwork.id}}').children()[0]).val()
 
-                console.log(params)
-              })
+                  $.ajax({
+                    url: "{% url 'rate' woodwork.id %}",
+                    method: "POST",
+                    data: params
+                  }).done(function (data) {
+                    toastr.success('Recensione aggiunta con successo!');
+                  })
+                })
             </script>
           </div>
         </div>

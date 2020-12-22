@@ -5,6 +5,10 @@
   <label for="rate-comment-{{woodwork.id}}" style="color: #2d2d2dc8 !important;">Commento</label>
 </div>
 
+<div class="csrf-token-{{woodwork.id}}">
+  {% csrf_token %}
+</div>
+
 <script>
   $(document).ready(function() {
     $('#ratings-{{woodwork.id}}').mdbRate();

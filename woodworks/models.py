@@ -65,3 +65,15 @@ class Order(models.Model):
 
   def __str__(self):
     return "%s - %s" % (self.customer, self.woodwork)
+
+class Rating(models.Model):
+  woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE, null=True, blank=True)
+  customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+  rate = models.IntegerField()
+  comment = models.TextField(null=True, blank=True)
+
+  class Meta:
+    db_table = "ratings"
+
+  def __str__(self):
+    return "%s - %s - %s" % (self.customer, self.woodwork, self.rate)

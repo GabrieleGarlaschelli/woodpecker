@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:woodwork_id>/is_liked', views.is_liked, name='is_liked'),
     path('<int:woodwork_id>/like', views.like, name='like'),
     path('<int:woodwork_id>/unlike', views.unlike, name='unlike'),
+    path('<int:woodwork_id>/rate', views.rate, name='rate'),
 ]

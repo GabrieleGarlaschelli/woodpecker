@@ -13,6 +13,9 @@ class Customer(models.Model):
 
   def __str__(self):
     return "%s" % self.user
+  
+  def fullname(self):
+    return "%s %s" % (self.user.first_name, self.user.last_name)
 
 class Address(models.Model):
   customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
