@@ -2,7 +2,7 @@
   {% for order in orders %}
     <div class="row">
       <div class="col-md-2">
-        {% include 'components/simple_woodwork_card.html' with woodwork=order.woodwork %}
+        {% include 'components/order_woodwork_card.html' with woodwork=order.woodwork %}
       </div>
       <div class="col-md-10">
         <!-- # TODO use constant from models -->

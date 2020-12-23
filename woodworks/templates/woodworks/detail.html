@@ -21,7 +21,37 @@
         <hr/>
         <div class="overflow-hidden">{{woodwork.description}}</div>
         <div class="down-section">
-          <button type="button" class="btn btn-primary border-rounded">Ordina</button>
+          <button data-toggle="modal" data-target="#order-{{woodwork.id}}" 
+            class="btn btn-primary border-rounded {% if user.is_authenticated == False %} disabled {% endif %}">Ordina</button>
+          <div class="modal fade" id="order-{{woodwork.id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Ordina {{woodwork.title}}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% include 'woodworks/order_form.html' with woodwork=woodwork %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                  <button class="btn btn-primary border-rounded {{woodwork.id}}-order-submit-button">Conferma ordine</button>
+                </div>
+          
+                <script>
+                  $('.datepicker').datepicker({
+                    format: "dd/mm/yyyy"
+                  });
+
+                  $('.{{woodwork.id}}-order-submit-button').on('click', function () {
+                    $("#{{woodwork.id}}-order-form").submit()
+                  })
+                </script>
+              </div>
+            </div>
+          </div>
           <button type="button" class="btn px-3" style="border: 0px; box-shadow: none !important;">
             <i class="fas fa-heart liked-{{woodwork.id}}" aria-hidden="true"></i>
             <i class="far fa-heart unliked-{{woodwork.id}}" aria-hidden="true"></i>
