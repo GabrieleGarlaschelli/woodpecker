@@ -19,6 +19,8 @@ def detail(request, woodwork_id):
   ratings = Rating.objects.filter(woodwork__pk=woodwork_id)
 
   average_rating = Rating.objects.filter(woodwork__pk=woodwork_id).aggregate(average_rating=Avg('rate'))
+  if average_rating['average_rating'] == None:
+    average_rating['average_rating'] = 0
   return render(request, 'woodworks/detail.html', {
     'woodwork': woodwork,
     'ratings': ratings,
