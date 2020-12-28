@@ -8,7 +8,7 @@
 {% block content %}
 
 <!--Carousel Wrapper-->
-  <div style="background-color: black; min-height: 80vh; height: 50vh;">
+  <div class="carouselContainer" style="background-color: black; min-height: 80vh; height: 50vh;">
     <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" >
       <!--Indicators-->
       <ol class="carousel-indicators " >
@@ -26,7 +26,7 @@
                 alt="First slide">
               <div class="mask rgba-black-light"></div>
             </div>
-          </div>
+        </div>
         {% endfor %}       
       </div>
       <!--/.Slides-->
@@ -41,10 +41,43 @@
       </a>
       <!--/.Controls-->
     </div>
+  </div>
   <!--/.Carousel Wrapper-->
 
 <h1 class="h1-responsive" class="h1" style="margin-top: 12vh; margin-left: 20px;">Woodworks</h1>
 {% include 'homepage/woodwork_section.html' with active_link="woodworks" %}
 <h1 class="h1-responsive" class="h1" style="margin-top: 12vh; margin-left: 20px;">Chi siamo</h1>
 {% include 'homepage/about_us_section.html' %}
+
+
+<style>
+  .carouselContainer {
+    display: none;
+}
+
+  @media (min-width: 576px) {
+    .carouselContainer {
+        display:none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .carouselContainer {
+        display:block;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .carouselContainer {
+        display:block;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .carouselContainer {
+        display:block;
+    }
+  } 
+</style>
+
 {% endblock %}
