@@ -18,8 +18,11 @@
     </ul>
 
     <div class="md-form my-0" style="color: white;">
-      <i class="fas fa-search prefix" style="color: white; font-size: 12pt; margin-top: 12px"></i>
-      <input type="text" placeholder="" id="searchBar" class="form-control default white-texted">
+      <form method="get" class="form-inline my-2 my-lg-0" action="{% url 'searchbar' %}">
+        <a type="submit" href="{% url 'searchbar' %}">
+          <i class="fas fa-search prefix" style="color: white; font-size: 12pt; margin-top: 12px"></i></a>
+        <input type="search" placeholder="Search" name="query" class="form-control default white-texted" id="query">
+      </form>
     </div>
     <div>
       <a type="button" href="{% url 'user_detail' %}" class="btn btn-outline-white border-rounded waves-effect px-3 ml-4">

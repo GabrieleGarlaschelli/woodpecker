@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg
+from django.db.models import Avg, Q
 import datetime
 
 from .models import Woodwork, Like, Rating
@@ -12,7 +12,6 @@ from woodworks.services.rate import rate_woodwork
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
   return render(request, 'index.html', {'woodworks': woodworks})
-
 
 def detail(request, woodwork_id):
   woodwork = Woodwork.objects.get(pk=woodwork_id)
@@ -66,3 +65,11 @@ def list(request):
 
 def about_us(request): 
   return render(request, 'about_us.html')
+  
+def searchbar(request):
+  query = request.GET['query']
+  allWoodworks = Woodwork.objects.filter(title__icontains=query)
+  params = {'allWoodworks': allWoodworks}
+  return render(request, 'searchbar.html', params)
+
+
