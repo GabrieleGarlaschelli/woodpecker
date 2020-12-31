@@ -1,0 +1,219 @@
+<a href="#" class="float-button" id="initialize-chat-button">
+  <i class="fa fa-comments my-float"></i>
+</a>
+
+<div class="chat-box" style="display: none;">
+  <div class="chat-header">
+    <span class="header-message">...</span>
+    <span class="actions">
+      <i class="fa fa-grip-lines minify-chat"></i>
+      <i class="fa fa-close close-chat"></i>
+    </span>
+  </div>
+  <div class="messages-feed">
+
+  </div>
+  <hr style="margin: 5px" />
+  <div class="message-input-container">
+    <!-- <input type="text" class=""> -->
+    <input type="text" id="input" class="message-input" placeholder="Scrivici il tuo problema">
+    <i class="fa fa-paper-plane send-message-button"></i>
+  </div>
+</div>
+
+<div class="minified-chat-box" style="display: none;">
+  <div class="chat-header minified-header">
+    <span class="header-message">...</span>
+    <span class="actions">
+      <i class="fa fa-grip-lines unminify-chat"></i>
+      <i class="fa fa-close close-chat"></i>
+    </span>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#initialize-chat-button").on('click', function() {
+      showChatBox()
+      initializeChat()
+    })
+
+    $(".close-chat").on('click', function() {
+      showChatButton()
+    })
+
+    $(".minify-chat").on('click', function () {
+      showMinifiedChatBox()
+    })
+
+    $(".unminify-chat").on('click', function () {
+      showChatBox()
+    })
+  })
+
+  function showChatBox() {
+    $("#initialize-chat-button").hide()
+    $(".chat-box").show()
+    $(".minified-chat-box").hide()
+  }
+
+  function showMinifiedChatBox() {
+    $("#initialize-chat-button").hide()
+    $(".chat-box").hide()
+    $(".minified-chat-box").show()
+  }
+
+  function showChatButton() {
+    $("#initialize-chat-button").show()
+    $(".chat-box").hide()
+    $(".minified-chat-box").hide()
+  }
+
+  function initializeChat() {
+    $(".header-message").html("Sto cercando un woodpecker ...")
+  }
+</script>
+
+<style>
+  :root {
+    /* generic */
+    --gutterSm: 0.4rem;
+    --gutterMd: 0.8rem;
+    --gutterLg: 1.6rem;
+    --gutterXl: 2.4rem;
+    --gutterXx: 7.2rem;
+    --colorPrimary400: #9c5300;
+    --colorPrimary600: #9c5300a1;
+    --colorPrimary800: #9c53005a;
+    --fontFamily: "Dosis", sans-serif;
+    --lineHeightSm: 1.1;
+    --lineHeightMd: 1.8;
+    --transitionDuration: 300ms;
+    --transitionTF: cubic-bezier(0.645, 0.045, 0.355, 1);
+    
+    /* floated labels */
+    --inputPaddingV: var(--gutterMd);
+    --inputPaddingH: var(--gutterLg);
+    --inputFontSize: var(--fontSizeLg);
+    --inputLineHeight: var(--lineHeightMd);
+    --labelScaleFactor: 0.8;
+    --labelDefaultPosY: 50%;
+    --labelTransformedPosY: calc(
+      (var(--labelDefaultPosY)) - 
+      (var(--inputPaddingV) * var(--labelScaleFactor)) - 
+      (var(--inputFontSize) * var(--inputLineHeight))
+    );
+    --inputTransitionDuration: var(--transitionDuration);
+    --inputTransitionTF: var(--transitionTF);
+  }
+
+  .float-button {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #9c5300;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+  }
+
+  .my-float {
+    margin-top: 22px;
+  }
+
+  .chat-box {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    min-width: 200px;
+    min-height: 300px;
+    width: 300px;
+    height: 400px;
+    background-color: #FFF;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+  }
+
+  .messages-feed {
+    height: 72%;
+  }
+
+  .message-input-container {
+    line-height: 40px;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .message-input {
+    width: 90%;
+    display: block;
+    margin: 0;
+    padding: var(--inputPaddingV) var(--inputPaddingH);
+    color: inherit;
+    font-family: inherit;
+    font-size: var(--inputFontSize);
+    font-weight: inherit;
+    line-height: var(--inputLineHeight);
+    border: none;
+    border-radius: 0.4rem;
+    float: left;
+    transition: box-shadow var(--transitionDuration);
+  }
+
+  .message-input::placeholder {
+    color: #B0BEC5;
+  }
+
+  .message-input:focus {
+    outline: none;
+    /* box-shadow: 0.2rem 0.4rem 0.6rem grey; */
+  }
+
+  .send-message-button {
+    width: 10%;
+    cursor: pointer;
+    float: right;
+    line-height: 55px;
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  .minified-chat-box {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    min-width: 200px;
+    width: 300px;
+    height: fit-content;
+  }
+
+  .chat-header {
+    background-color: #9c5300;
+    color: #FFF;
+    line-height: 40px;
+    text-align: left;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .minified-header {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .actions {
+    float: right;
+    cursor: pointer;
+  }
+
+  .actions i {
+    margin-left: 10px;
+  }
+</style>

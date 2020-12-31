@@ -60,7 +60,8 @@ def unlike(request, woodwork_id):
 def list(request):
   woodworks = Woodwork.objects.order_by('created_at')
   return render(request, 'woodworks/list.html', {
-    'woodworks': woodworks
+    'woodworks': woodworks,
+    'has_active_chat': False
   })
 
 def about_us(request): 
