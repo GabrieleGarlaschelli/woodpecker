@@ -4,11 +4,11 @@
 
 <div class="chat-box" style="display: none;">
   <div class="chat-header">
-    <span class="header-message">...</span>
-    <span class="actions">
+    <div class="header-message">...</div>
+    <div class="actions">
       <i class="fa fa-grip-lines minify-chat"></i>
       <i class="fa fa-close close-chat"></i>
-    </span>
+    </div>
   </div>
   <div class="messages-feed">
 
@@ -32,10 +32,14 @@
 </div>
 
 <script>
+  var chatSocket;
+
   $(document).ready(function() {
     $("#initialize-chat-button").on('click', function() {
       showChatBox()
-      initializeChat()
+      if(chatSocket == undefined || chatSocket == null) {
+        initializeChat()
+      }
     })
 
     $(".close-chat").on('click', function() {
@@ -69,10 +73,78 @@
     $(".minified-chat-box").hide()
   }
 
+  function operatorText(text) {
+    $(".header-message").html(text)
+  }
+
   function initializeChat() {
-    $(".header-message").html("Sto cercando un woodpecker ...")
+    operatorText('Ricerca ...')
+    chatSocket = new WebSocket('ws://' + window.location.host + '/ws/accounts/chat/{{user.id}}/');
+
+    chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      if(data.message_from == 'woodpecker_admin') {
+        manageAdminMessage(data.message)
+      } else {
+        manageMineMessage(data.message)
+      }
+    };
+
+    chatSocket.onopen = function(e) {
+      operatorText('Connesso')
+    }
+
+    chatSocket.onclose = function (e) {
+      console.error('Chat socket closed unexpectedly');
+    };
+
+    $('.message-input').on('keyup', function (e) {
+      if (e.keyCode === 13) {  // enter, return
+        sendMessage()
+      }
+    });
+
+    $('.send-message-button').on('click', function (e) {
+      sendMessage()
+    });
+  }
+
+  function sendMessage() {
+    const message = $(".message-input").val();
+    chatSocket.send(JSON.stringify({
+      'message': message
+    }));
+    $(".message-input").val('');
+  }
+
+  function manageAdminMessage(text) {
+    addMessage(text, 'right')
+  }
+
+  function manageMineMessage(text) {
+    addMessage(text, 'left')
+  }
+
+  function addMessage(text, side) {
+    var message_box_container = $("<div><div>")
+    message_box_container.css('min-height', '30px')
+    message_box_container.addClass('d-flex')
+    if(side == 'left') {
+      message_box_container.addClass('justify-content-start')
+    } else {
+      message_box_container.addClass('justify-content-end')
+    }
+    var message_box = $("<div><div>")
+    message_box.css("float", side)
+    message_box.css("text-align", side)
+    message_box.addClass('message-box')
+    message_box.html(text)
+    
+    message_box_container.append(message_box)
+    $(".messages-feed").append(message_box_container)
   }
 </script>
+
 
 <style>
   :root {
@@ -105,6 +177,9 @@
     );
     --inputTransitionDuration: var(--transitionDuration);
     --inputTransitionTF: var(--transitionTF);
+
+    /* mine */
+    --paddingFromBorder: 10px;
   }
 
   .float-button {
@@ -140,13 +215,25 @@
 
   .messages-feed {
     height: 72%;
+    overflow: auto;
+    padding: var(--paddingFromBorder)
+  }
+
+  .message-box {
+    border: solid 0.2px rgb(208, 205, 205);
+    border-radius: 0.4rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 60%;
   }
 
   .message-input-container {
     line-height: 40px;
     text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: var(--paddingFromBorder);
+    padding-right: var(--paddingFromBorder);
   }
 
   .message-input {
@@ -180,7 +267,7 @@
     float: right;
     line-height: 55px;
     text-align: right;
-    padding-right: 10px;
+    padding-right: var(--paddingFromBorder);
   }
 
   .minified-chat-box {
@@ -188,7 +275,7 @@
     bottom: 30px;
     right: 30px;
     min-width: 200px;
-    width: 300px;
+    width: 400px;
     height: fit-content;
   }
 
@@ -196,16 +283,23 @@
     background-color: #9c5300;
     color: #FFF;
     line-height: 40px;
+    max-height: 40px;
     text-align: left;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: var(--paddingFromBorder);
+    padding-right: var(--paddingFromBorder);
+    overflow: hidden;
   }
 
   .minified-header {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+  }
+
+  .header-message {
+    max-width: 70%;
+    float: left;
   }
 
   .actions {

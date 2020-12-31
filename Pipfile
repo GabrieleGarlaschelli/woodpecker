@@ -8,6 +8,7 @@ django = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 django-allauth = "~=0.42.0"
+channels = "*"
 
 [dev-packages]
 
