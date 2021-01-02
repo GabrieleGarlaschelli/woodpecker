@@ -7,7 +7,6 @@ class ChatConsumer(WebsocketConsumer):
   def connect(self):
     self.user_id = self.scope['url_route']['kwargs']['user_id']
     self.group_chat_name = 'chat_' + self.user_id
-    print(self.group_chat_name)
     
     async_to_sync(self.channel_layer.group_add)(
       self.group_chat_name,

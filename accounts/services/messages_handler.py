@@ -6,7 +6,6 @@ def handle_received_message(message, from_user, user_chat_id):
   chat = Chat.objects.filter(user_id=user_chat_id).first()
   text = "%s ha detto: %s" % (from_user, message)
 
-  print('creating')
   message = Message.objects.create(
       chat_id=chat.id,
       body=message,
