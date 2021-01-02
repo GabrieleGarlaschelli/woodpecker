@@ -19,9 +19,8 @@
 
     <div class="md-form my-0" style="color: white;">
       <form method="get" class="form-inline my-2 my-lg-0" action="{% url 'searchbar' %}">
-        <a type="submit" href="{% url 'searchbar' %}">
-          <i class="fas fa-search prefix" style="color: white; font-size: 12pt; margin-top: 12px"></i></a>
-        <input type="search" placeholder="Search" name="query" class="form-control default white-texted" id="query">
+        <a type="submit" href="{% url 'searchbar' %}"></a>
+        <input type="search" placeholder="Search" name="query" style="color: white !important;" class="form-control default white-texted" id="query">
       </form>
     </div>
     <div>
@@ -45,6 +44,10 @@
     textarea.md-textarea:focus:not([readonly]) {
       border-bottom: 1px solid #ffffff !important;
       box-shadow: 0 1px 0 0 #ffffff !important;
+      color: white !important;
+    }
+
+    ::placeholder {
       color: white !important;
     }
   </style>
