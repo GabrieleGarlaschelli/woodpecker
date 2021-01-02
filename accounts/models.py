@@ -29,3 +29,28 @@ class Address(models.Model):
   def __str__(self):
     return "%s, " % self.customer + "%s" % self.address
 
+class Chat(models.Model): 
+  OPENED = 'opened'
+  CLOSED = 'closed'
+
+  STATUSES = [
+    (OPENED, 'Aperta'),
+    (CLOSED, 'Chiusa')
+  ]
+
+  user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+  status = models.CharField(max_length=255, choices=STATUSES, default=OPENED)
+  created_at = models.DateTimeField()
+
+  class Meta:
+    db_table = "chats"
+
+class Message(models.Model):
+  chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+  body = models.TextField(null=False)
+  sender = models.CharField(max_length=255)
+  created_at = models.DateTimeField()
+
+  class Meta:
+    db_table = "messages"
+

@@ -6,7 +6,7 @@ from django.utils.dateparse import parse_date
 from django.urls import reverse
 import datetime
 from .forms import UserRegisterForm
-from .models import Address, Customer
+from .models import Address, Customer, CustomUser
 from woodworks.models import Order
 from  accounts.email_backend import EmailBackend 
 
@@ -76,6 +76,11 @@ def update_address(request, address_id):
   address.save()
 
   return redirect(reverse('user_detail'))
+
+@login_required
+def chat_with(request, user_id):
+  chat_with_user = CustomUser.objects.get(pk=user_id)
+  return render(request, 'chat.html', {'chat_with_user': chat_with_user})
 
 @login_required
 def create_address(request):

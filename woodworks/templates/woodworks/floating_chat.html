@@ -79,7 +79,7 @@
 
   function initializeChat() {
     operatorText('Ricerca ...')
-    chatSocket = new WebSocket('ws://' + window.location.host + '/ws/accounts/chat/{{user.id}}/');
+    chatSocket = new WebSocket('ws://' + window.location.host + '/ws/accounts/chat/{{user.id}}&false/');
 
     chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
@@ -112,7 +112,8 @@
   function sendMessage() {
     const message = $(".message-input").val();
     chatSocket.send(JSON.stringify({
-      'message': message
+      'message': message,
+      'from': "{{user.id}}"
     }));
     $(".message-input").val('');
   }
