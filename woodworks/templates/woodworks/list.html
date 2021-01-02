@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="d-flex flex-wrap" style="width: 100vw; overflow-x: scroll;">
+  <div class="d-flex flex-wrap" style="width: 100vw; overflow-x: auto;">
     {% for woodwork in woodworks %}
       <div style="max-width: 400px; min-width: 300px" class="m-3">
         {% include 'components/woodwork_card.html' with woodwork=woodwork %}
