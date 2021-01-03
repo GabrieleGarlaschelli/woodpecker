@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Q
 import datetime
 
-from .models import Woodwork, Like, Rating, WoodworkImage
+from .models import Woodwork, Like, Rating, WoodworkImage, Address
 from accounts.models import Chat, Message
 
 from woodworks.services.order import order_woodwork
@@ -18,11 +18,12 @@ def detail(request, woodwork_id):
   woodwork = Woodwork.objects.get(pk=woodwork_id)
   gallery_images = WoodworkImage.objects.filter(woodwork__pk=woodwork_id)
   ratings = Rating.objects.filter(woodwork__pk=woodwork_id)
-
+  addresses = Address.objects.filter(customer__pk=request.user.customer.id)
   average_rating = Rating.objects.filter(woodwork__pk=woodwork_id).aggregate(average_rating=Avg('rate'))
   if average_rating['average_rating'] == None:
     average_rating['average_rating'] = 0
   return render(request, 'woodworks/detail.html', {
+    "addresses": addresses,
     'woodwork': woodwork,
     'ratings': ratings,
     'avarage_rating': average_rating['average_rating'],
@@ -40,7 +41,9 @@ def order(request, woodwork_id):
   notes = request.POST.get('notes')
   quantity = request.POST.get('quantity')
   expiration_date = request.POST.get('expiration_date')
-  success = order_woodwork(woodwork_id, request.user.customer.id, notes, quantity, expiration_date)
+  expiration_date = datetime.datetime.strptime(expiration_date,"%d/%m/%Y").date()
+  address_id = request.POST.get('address')
+  success = order_woodwork(woodwork_id, request.user.customer.id, notes, quantity, expiration_date, address_id)
   return render(request, 'woodworks/order_successful.html')
 
 @login_required

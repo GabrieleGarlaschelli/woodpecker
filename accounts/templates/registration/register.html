@@ -8,6 +8,7 @@
 <div class="d-flex justify-content-center flex-wrap" style="width: 100vw; height: 90vh; overflow-x: auto;">
   <form class="text-center border-rounded p-5" style="height: fit-content; margin: auto; min-width: 400px; border: solid 1px #9f9e9e" method="POST">
     {% csrf_token %}
+    <p class="h4 mb-4">Registrati</p>
     {{form.as_p}}
     <button id="submit" class="btn btn-primary border-rounded" type="submit">Registrati</button>
   </form>
