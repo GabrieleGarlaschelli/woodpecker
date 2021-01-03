@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Q
 import datetime
 
-from .models import Woodwork, Like, Rating
+from .models import Woodwork, Like, Rating, WoodworkImage
 from accounts.models import Chat, Message
 
 from woodworks.services.order import order_woodwork
@@ -16,6 +16,7 @@ def index(request):
 
 def detail(request, woodwork_id):
   woodwork = Woodwork.objects.get(pk=woodwork_id)
+  gallery_images = WoodworkImage.objects.filter(woodwork__pk=woodwork_id)
   ratings = Rating.objects.filter(woodwork__pk=woodwork_id)
 
   average_rating = Rating.objects.filter(woodwork__pk=woodwork_id).aggregate(average_rating=Avg('rate'))
@@ -24,7 +25,8 @@ def detail(request, woodwork_id):
   return render(request, 'woodworks/detail.html', {
     'woodwork': woodwork,
     'ratings': ratings,
-    'avarage_rating': average_rating['average_rating']
+    'avarage_rating': average_rating['average_rating'],
+    'gallery_images': gallery_images
   })
 
 def rate(request, woodwork_id):

@@ -9,13 +9,27 @@
   <div class="container-fluid" style="margin-top: 30px">
     <div class="row">
       <div class="col-sm-6 col-12">
-        <img src="/{{woodwork.main_image}}" class="img-fluid border-rounded" alt="Responsive image">
-        <div style="margin-top: 10px">
-          <div style="float: left; border-radius: 5px; background-color: black;">
-            <img src="/{{woodwork.main_image}}" alt="thumbnail" class="img-thumbnail" style="height: 100px; opacity: 60%;">
+        <img src="/{{woodwork.main_image}}" class="img-fluid border-rounded big-image" alt="Responsive image">
+        <div style="margin-top: 10px" class="d-flex flex-wrap">
+          <div style="float: left; border-radius: 5px;" class="gallery-images active-image">
+            <img src="/{{woodwork.main_image}}" alt="thumbnail" class="img-thumbnail" style="height: 100px">
           </div>
+          {% for image in gallery_images %}
+            <div style="float: left; border-radius: 5px;" class="gallery-images">
+              <img src="/{{image.image}}" alt="thumbnail" class="img-thumbnail" style="height: 100px;">
+            </div>
+          {% endfor %}
         </div>
       </div>
+
+      <script>
+        $('.gallery-images').on('click', function() {
+          $('.gallery-images').removeClass('active-image')
+          $(this).addClass('active-image')
+          $('.big-image').attr('src', $(this).find('img').attr('src'))
+        })
+      </script>
+
       <div class="col-sm-6 col-12">
         <p class="h1">{{woodwork.title}}</p>
         <hr/>
@@ -223,6 +237,11 @@
         width: 100%;
       }
     } 
+
+    .active-image {
+      background-color: black;
+      opacity: 60%;
+    }
   </style>
 
 {% endblock %}

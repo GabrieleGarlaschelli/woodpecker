@@ -108,6 +108,7 @@ media/
 *.pid
 
 woodworks/static/woodworks_image/*
+woodworks/static/woodworks_images/*
 
 # Ignore Django Migrations in Development if you are working on team
 

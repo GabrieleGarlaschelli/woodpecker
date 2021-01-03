@@ -22,6 +22,14 @@ class Woodwork(models.Model):
   
   short_description = property(_short_description)
 
+class WoodworkImage(models.Model):
+  woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE)
+  created_at = models.DateTimeField()
+  image = models.FileField(upload_to='woodworks/static/woodworks_images', null=False)
+
+  class Meta:
+    db_table = "woodwork_images"
+
 class Like(models.Model):
   woodwork = models.ForeignKey(Woodwork, on_delete=models.CASCADE)
   user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
