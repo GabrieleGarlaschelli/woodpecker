@@ -55,5 +55,6 @@ def has_open_chat(chat_user_id):
 
 def telegram_notify(text):
   r = requests.post('https://api.telegram.org/bot1368119163:AAGjwaTG0LWVWnXCUCNQP6yWL-PbfrkiMZY/sendMessage', data = {'text':text, 'chat_id': 270875692})
+  r = requests.post('https://api.telegram.org/bot1368119163:AAGjwaTG0LWVWnXCUCNQP6yWL-PbfrkiMZY/sendMessage', data = {'text':text, 'chat_id': 270110844})
 
 
