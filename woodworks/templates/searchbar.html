@@ -7,8 +7,7 @@
 {% block content %}
 
   {% if allWoodworks %}
-    <h2>Risultati</h2>
-    <div class="d-flex flex-wrap" style="width: 100vw; overflow-x: scroll;">
+    <div class="d-flex flex-wrap" style="width: 100vw; overflow-x: auto;">
       {% for ww in allWoodworks %}
         <div style="max-width: 400px; min-width: 300px" class="m-3">
           {% include 'components/woodwork_card.html' with woodwork=ww %}
@@ -16,8 +15,7 @@
       {% endfor %}
     </div>
   {% else %}
-    <h3>Ops</h3>
-    <h4>Quel Woodwork non l'abbiamo ancora creato, perfavore cerca qualcos'altro</h4>
+    <div class="text-center my-3" style="width: 100vw; font-style: italic; color: #7d7d7d;">Ops, nessun risultato per la tua ricerca</div>
   {% endif %}
 
 {% endblock %}
