@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
@@ -6,9 +7,10 @@ from django.utils.dateparse import parse_date
 from django.urls import reverse
 import datetime
 from .forms import UserRegisterForm
-from .models import Address, Customer, CustomUser
+from .models import Address, Customer, CustomUser, Message, Chat
 from woodworks.models import Order
-from  accounts.email_backend import EmailBackend 
+from accounts.email_backend import EmailBackend 
+from .services.messages_handler import close_chat_with_user
 
 def register_view(request):
     next = request.GET.get('next')
@@ -80,7 +82,16 @@ def update_address(request, address_id):
 @login_required
 def chat_with(request, user_id):
   chat_with_user = CustomUser.objects.get(pk=user_id)
-  return render(request, 'chat.html', {'chat_with_user': chat_with_user})
+  chat = Chat.objects.get(user__pk=user_id)
+  messages = None
+  if chat != None:
+    messages = Message.objects.filter(chat__pk=chat.id).order_by('created_at')
+  return render(request, 'chat.html', {'chat_with_user': chat_with_user, 'messages': messages})
+
+@login_required
+def close_chat(request, chat_user_id):
+  result = close_chat_with_user(chat_user_id)
+  return JsonResponse({'result': True})
 
 @login_required
 def create_address(request):

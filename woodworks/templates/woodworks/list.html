@@ -13,7 +13,9 @@
     {% endfor %}
   </div>
 
-  {% include 'woodworks/floating_chat.html' with has_active_chat="has_active_chat" %}
+  {% if user.is_authenticated %}
+    {% include 'woodworks/floating_chat.html' with messages=messages %}
+  {% endif }
 
   <script>
     // TODO unify javascript

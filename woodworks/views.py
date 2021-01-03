@@ -5,6 +5,7 @@ from django.db.models import Avg, Q
 import datetime
 
 from .models import Woodwork, Like, Rating
+from accounts.models import Chat, Message
 
 from woodworks.services.order import order_woodwork
 from woodworks.services.rate import rate_woodwork
@@ -59,9 +60,17 @@ def unlike(request, woodwork_id):
 
 def list(request):
   woodworks = Woodwork.objects.order_by('created_at')
+
+  messages = None
+  if request.user != None:
+    chat = Chat.objects.get(user__pk=request.user.id, status=Chat.OPENED)
+    messages = None
+    if chat != None:
+      messages = Message.objects.filter(chat__pk=chat.id).order_by('created_at')
+
   return render(request, 'woodworks/list.html', {
     'woodworks': woodworks,
-    'has_active_chat': False
+    'messages': messages
   })
 
 def about_us(request): 

@@ -13,8 +13,10 @@ class ChatConsumer(WebsocketConsumer):
       self.channel_name
     )
 
+    result = handle_connection_opened(self.user_id)
     self.is_admin = self.scope['url_route']['kwargs']['is_admin'] == "true"
-    if not self.is_admin:
+
+    if not self.is_admin and result['has_opened_new_chat']:
       async_to_sync(self.channel_layer.group_send)(
         self.group_chat_name,
         {
@@ -23,8 +25,6 @@ class ChatConsumer(WebsocketConsumer):
           'from': "woodpecker_admin"
         }
       )
-
-    handle_connection_opened(self.user_id)
 
     self.accept()
 
