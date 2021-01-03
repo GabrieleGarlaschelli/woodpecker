@@ -79,7 +79,8 @@
       const message = $(".message-input").val();
       chatSocket.send(JSON.stringify({
         'message': message,
-        'from': 'woodpecker_admin'
+        'from': 'woodpecker_admin',
+        'message_type': 'chat_message'
       }));
       $(".message-input").val('');
     }
@@ -94,6 +95,11 @@
         url: "{% url 'close_chat' chat_with_user.id %}",
         method: "GET",
       }).done(function (data) {
+        chatSocket.send(JSON.stringify({
+          'message': 'closing chat ...',
+          'from': 'woodpecker_admin',
+          'message_type': 'close_chat_message'
+        }));
         alert('Chat Chiusa!')
       })
     }

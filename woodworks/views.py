@@ -63,7 +63,7 @@ def list(request):
 
   messages = None
   if request.user != None:
-    chat = Chat.objects.get(user__pk=request.user.id, status=Chat.OPENED)
+    chat = Chat.objects.filter(user__pk=request.user.id, status=Chat.OPENED).first()
     messages = None
     if chat != None:
       messages = Message.objects.filter(chat__pk=chat.id).order_by('created_at')

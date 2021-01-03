@@ -95,10 +95,16 @@
 
     chatSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
-      if(data.message_from == 'woodpecker_admin') {
-        manageAdminMessage(data.message)
-      } else {
-        manageMineMessage(data.message)
+
+      if(data.type == 'chat_message') {
+        if (data.message_from == 'woodpecker_admin') {
+          manageAdminMessage(data.message)
+        } else {
+          manageMineMessage(data.message)
+        }
+      } else if(data.type == 'close_chat_message') {
+        chatSocket = null
+        showChatButton()
       }
     };
 
@@ -125,7 +131,8 @@
     const message = $(".message-input").val();
     chatSocket.send(JSON.stringify({
       'message': message,
-      'from': "{{user.id}}"
+      'from': "{{user.id}}",
+      'message_type': 'chat_message'
     }));
     $(".message-input").val('');
   }
@@ -220,6 +227,7 @@
     min-height: 300px;
     width: 300px;
     height: 400px;
+    max-height: 95vh;
     background-color: #FFF;
     border-radius: 10px;
     text-align: center;
