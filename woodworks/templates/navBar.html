@@ -24,7 +24,7 @@
       </form>
     </div>
     <div>
-      <a type="button" href="{% url 'user_detail' %}" class="btn btn-outline-white border-rounded waves-effect px-3 ml-4">
+      <a type="button" href="{% url 'user_detail' %}" style="color: white !important;" class="btn btn-no-outline border-rounded waves-effect px-3 ml-4">
         <i class="fas fa-user" aria-hidden="true"></i></a>
     </div>
   </div>
@@ -49,6 +49,11 @@
 
     ::placeholder {
       color: white !important;
+    }
+
+    .btn-no-outline {
+      outline: transparent;
+      box-shadow: none;
     }
   </style>
 
