@@ -8,9 +8,110 @@
 <div class="d-flex justify-content-center flex-wrap" style="width: 100vw; height: 90vh; overflow-x: auto;">
   <form class="text-center border-rounded p-5" style="height: fit-content; margin: auto; min-width: 400px; border: solid 1px #9f9e9e" method="POST">
     {% csrf_token %}
-    <p class="h4 mb-4">Registrati</p>
-    {{form.as_p}}
-    <button id="submit" class="btn btn-primary border-rounded" type="submit">Registrati</button>
+    <input class="mt-3 form-control grey-placeholder" name="username" type="text" placeholder="Nome Utente">
+    <input class="mt-3 form-control grey-placeholder" id="email_input" name="email" type="text" placeholder="Email">
+    <input class="mt-3 form-control grey-placeholder" id="email_confirmation_input" name="email_confirmation" type="hidden" placeholder="Email">
+    <input class="mt-3 form-control grey-placeholder" id="password_input" name="password" type="password" placeholder="Password">
+    <input class="mt-3 form-control grey-placeholder" id="password_confirmation_input" name="password_confirmation" type="password" placeholder="Conferma password">
+    <p style="color: red; font-size: 10pt;" id="password_not_equal_message">
+      Password non coincide
+    </p>
+    <input class="mt-3 form-control grey-placeholder" id="firstname_input" name="first_name" type="text" placeholder="Nome">
+    <input class="mt-3 form-control grey-placeholder" id="lastname_input" name="last_name" type="text" placeholder="Cognome">
+    <button id="submit" class="btn btn-primary border-rounded mt-5" type="submit">Registrati</button>
   </form>
+
+  <script>
+    var validations = {
+      firstname: "invalid",
+      lastname: "invalid",
+      password: "invalid",
+      email: "invalid",
+    }
+
+    $(document).ready(function() {
+      $("#email_input").on('keyup', function(e) {
+        $("#email_confirmation_input").val($(this).val())
+      })
+
+      $("#password_input").on('keyup', function() {checkPasswordMatch()})
+      $("#password_confirmation_input").on('keyup', function() {checkPasswordMatch()})
+      $("#firstname_input").on('keyup', function () {checkPresenceFirstname()})
+      $("#lastname_input").on('keyup', function () { checkPresenceLastname() })
+      $("#email_input").on('keyup', function () { checkPresenceEmail() })
+
+      disableSubmit()
+    })
+
+    function checkPasswordMatch() {
+      var password_match = $("#password_input").val() == $("#password_confirmation_input").val()
+      if (password_match && present($("#password_input").val())) {
+        validations.password = "valid"
+        $("#password_not_equal_message").hide()
+      } else {
+        validations.password = 'invalid'
+        $("#password_not_equal_message").show()
+      }
+      checkValidations()
+    }
+
+    function checkPresenceFirstname() {
+      if(present($("#firstname_input").val())) {
+        validations.firstname = 'valid'
+      } else {
+        validations.firstname = 'invalid'
+      }
+      checkValidations()
+    }
+
+    function checkPresenceLastname() {
+      if (present($("#lastname_input").val())) {
+        validations.lastname = 'valid'
+      } else {
+        validations.lastname = 'invalid'
+      }
+      checkValidations()
+    }
+
+    function checkPresenceEmail() {
+      if (present($("#email_input").val())) {
+        validations.email = 'valid'
+      } else {
+        validations.email = 'invalid'
+      }
+      checkValidations()
+    }
+
+    function checkValidations() {
+      var valid = true
+      for(var key in validations) {
+        if(validations[key] == 'invalid') {valid = false}
+      }
+
+      if(valid) {
+        enableSubmit()
+      } else {
+        disableSubmit()
+      }
+    } 
+
+    function disableSubmit() {
+      $("#submit").prop("disabled", "disabled")
+    }
+
+    function enableSubmit() {
+      $("#submit").prop("disabled", "")
+    }
+
+    function present(text) {
+      return text != undefined && text != null && text != ''
+    }
+
+  </script>
+  <style>
+    .grey-placeholder::placeholder {
+      color: grey !important;
+    }
+  </style>
 </div>
 {% endblock %}

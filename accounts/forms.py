@@ -17,6 +17,8 @@ class UserRegisterForm(forms.ModelForm):
     email = forms.EmailField(label='Indirizzo e-mail')
     email_confirmation = forms.EmailField(label='Conferma e-mail')
     password = forms.CharField(widget=forms.PasswordInput)
+    first_name = forms.CharField()
+    last_name = forms.CharField()
  
     class Meta:
         model = CustomUser
@@ -25,6 +27,8 @@ class UserRegisterForm(forms.ModelForm):
             'email',
             'email_confirmation',
             'password',
+            'first_name',
+            'last_name',
         ]
  
     def clean(self, *args, **kwargs):

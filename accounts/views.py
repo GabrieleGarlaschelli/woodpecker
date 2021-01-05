@@ -21,11 +21,11 @@ def register_view(request):
         password = form.cleaned_data.get('password')
         user.set_password(password)
         user.save()
-        new_user = authenticate(username=user.username, password=user.password)
-        login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+        # new_user = authenticate(username=user.username, password=user.password)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         if next:
             return redirect(next)
-        return redirect('/')
+        return redirect(reverse('user_detail'))
     return render(request, 'registration/register.html', {'form': form, 'title': title})
 
 def logout_view(request):
