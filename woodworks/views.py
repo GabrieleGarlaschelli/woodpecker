@@ -18,7 +18,10 @@ def detail(request, woodwork_id):
   woodwork = Woodwork.objects.get(pk=woodwork_id)
   gallery_images = WoodworkImage.objects.filter(woodwork__pk=woodwork_id)
   ratings = Rating.objects.filter(woodwork__pk=woodwork_id)
-  addresses = Address.objects.filter(customer__pk=request.user.customer.id)
+  if request.user.is_authenticated:
+    addresses = Address.objects.filter(customer__pk=request.user.customer.id)
+  else:
+    addresses = None
   average_rating = Rating.objects.filter(woodwork__pk=woodwork_id).aggregate(average_rating=Avg('rate'))
   if average_rating['average_rating'] == None:
     average_rating['average_rating'] = 0
