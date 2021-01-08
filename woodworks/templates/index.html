@@ -49,6 +49,9 @@
 <h1 class="h1-responsive" class="h1" style="margin-top: 12vh; margin-left: 20px;">Chi siamo</h1>
 {% include 'homepage/about_us_section.html' %}
 
+{% if user.is_authenticated %}
+    {% include 'woodworks/floating_chat.html' with messages=messages %}
+{% endif %}
 
 <style>
   .carouselContainer {
