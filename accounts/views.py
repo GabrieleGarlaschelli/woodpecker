@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.dateparse import parse_date
@@ -79,7 +79,7 @@ def update_address(request, address_id):
 
   return redirect(reverse('user_detail'))
 
-@login_required
+@permission_required('accounts.view_chat', raise_exception=True)
 def chat_with(request, user_id):
   chat_with_user = CustomUser.objects.get(pk=user_id)
   chat = Chat.objects.get(user__pk=user_id)
