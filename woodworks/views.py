@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Avg, Q
 import datetime
 
@@ -10,6 +10,9 @@ from accounts.models import Chat, Message
 from woodworks.services.order import order_woodwork
 from woodworks.services.rate import rate_woodwork
 from woodworks.services.update_order_status import update_woodwork_order_status
+
+def superuser_check(user):
+  return user.is_superuser
 
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
@@ -85,7 +88,8 @@ def list(request):
     'messages': messages
   })
 
-def update_order_status(order_id):
+@user_passes_test(superuser_check)
+def update_order_status(request, order_id):
   status = request.POST['status']
   update_woodwork_order_status(order_id, status)
   return JsonResponse({'result': True})

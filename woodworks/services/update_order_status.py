@@ -8,5 +8,5 @@ def update_woodwork_order_status(order_id, status):
   order.save()
 
   if order.status == Order.DONE:
-    text = "Gentile signor %s,\nLa informiamo che il suo ordine del woodwork %s è in attesa di consegna. Ci contatti per il ritiro" % (order.customer.customuser.fullname, order.woodwork.title)
-    send(order.customer.customuser.email, 'Ordine in attesa di consegna', text)
+    text = "Gentile signor %s,\nLa informiamo che il suo ordine del woodwork %s è in attesa di consegna. Ci contatti per il ritiro" % (order.customer.fullname(), order.woodwork.title)
+    send(order.customer.user.email, 'Ordine in attesa di consegna', text)

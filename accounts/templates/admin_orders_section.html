@@ -33,6 +33,9 @@
             </a>
           </li>
         </ul>
+        <div class="csrf-token-{{order.id}}">
+          {% csrf_token %}
+        </div>
         <div>
           <b>Cliente:</b> {{order.customer.fullname}}
         </div>
@@ -59,7 +62,8 @@
             url: "{% url 'update_order_status' order.id %}",
             method: "POST",
             data: {
-              status: status
+              status: status,
+              csrfmiddlewaretoken: $($('.csrf-token-{{order.id}}').children()[0]).val()
             }
           }).done(function (data) {
             window.location.reload()
