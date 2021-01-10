@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.dateparse import parse_date
@@ -11,6 +11,10 @@ from .models import Address, Customer, CustomUser, Message, Chat
 from woodworks.models import Order
 from accounts.email_backend import EmailBackend 
 from .services.messages_handler import close_chat_with_user
+from .services.email_handler import send
+
+def superuser_check(user):
+  return user.is_superuser
 
 def register_view(request):
     next = request.GET.get('next')
