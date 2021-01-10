@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:woodwork_id>/like', views.like, name='like'),
     path('<int:woodwork_id>/unlike', views.unlike, name='unlike'),
     path('<int:woodwork_id>/rate', views.rate, name='rate'),
+    path('<int:order_id>/update_status', views.update_order_status, name='update_order_status'),
 ]

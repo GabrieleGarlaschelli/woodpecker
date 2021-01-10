@@ -9,6 +9,7 @@ from accounts.models import Chat, Message
 
 from woodworks.services.order import order_woodwork
 from woodworks.services.rate import rate_woodwork
+from woodworks.services.update_order_status import update_woodwork_order_status
 
 def index(request):
   woodworks = Woodwork.objects.order_by('-publication_date')[:3]
@@ -80,6 +81,10 @@ def list(request):
     'woodworks': woodworks,
     'messages': messages
   })
+
+def update_order_status(order_id):
+  update_woodwork_order_status(order_id)
+  return JsonResponse({'result': True})
 
 def about_us(request): 
   return render(request, 'about_us.html')
