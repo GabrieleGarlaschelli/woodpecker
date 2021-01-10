@@ -144,7 +144,9 @@
       </div>
     </div>
   </div>
-
+{% if user.is_authenticated %}
+  {% include 'woodworks/floating_chat.html' with messages=messages %}
+{% endif %}
   <script>
     $(document).ready(function () {
       $(".liked-{{woodwork.id}}").hide()

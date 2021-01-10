@@ -181,6 +181,9 @@
       </div>
     </div>
   </div>
+{% if user.is_authenticated %}
+    {% include 'woodworks/floating_chat.html' with messages=messages %}
+{% endif %}
 
   <style>
     .list-group-item {
