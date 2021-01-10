@@ -8,33 +8,39 @@
         <!-- # TODO use constant from models -->
         <ul class="stepper stepper-horizontal my-0">
           <li class="{% if order.status == 'received' %} active {% endif %}">
-            <a href="#">
+            <a class="{{order.id}}-change-order-button" order-status="received">
               <span class="label">Ricevuto</span>
             </a>
           </li>
           <li class="{% if order.status == 'confirmed' %} active {% endif %}">
-            <a href="#">
+            <a class="{{order.id}}-change-order-button" order-status="confirmed">
               <span class="label">Confermato</span>
             </a>
           </li>
           <li class="{% if order.status == 'pending' %} active {% endif %}">
-            <a href="#">
+            <a class="{{order.id}}-change-order-button" order-status="pending">
               <span class="label">Lavoro in corso</span>
             </a>
           </li>
           <li class="{% if order.status == 'done' %} active {% endif %}">
-            <a href="#">
+            <a class="{{order.id}}-change-order-button" order-status="done">
               <span class="label">Fatto, in attesa di consegna</span>
             </a>
           </li>
           <li class="{% if order.status == 'delivered' %} active {% endif %}">
-            <a href="#">
+            <a class="{{order.id}}-change-order-button" order-status="delivered">
               <span class="label">Consegnato</span>
             </a>
           </li>
         </ul>
         <div>
+          <b>Cliente:</b> {{order.customer.fullname}}
+        </div>
+        <div>
           <b>Quantità:</b> {{order.quantity}}
+        </div>
+        <div>
+          <b>Email:</b> {{order.customer.user.email}}
         </div>
         <div>
           <b>Scadenza:</b> {{order.expiration_on}}
@@ -44,5 +50,22 @@
         </div>
       </div>
     </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".{{order.id}}-change-order-button").on('click', function (event) {
+          status = $(this).attr('order-status')
+          $.ajax({
+            url: "{% url 'update_order_status' order.id %}",
+            method: "POST",
+            data: {
+              status: status
+            }
+          }).done(function (data) {
+            window.location.reload()
+          })
+        })
+      })
+    </script>
   {% endfor %}
 </div>

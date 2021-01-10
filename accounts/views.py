@@ -44,7 +44,13 @@ def user_detail(request):
     customer.save()
 
   addresses = Address.objects.filter(customer__pk=request.user.customer.id)
-  orders = Order.objects.filter(customer__pk=request.user.customer.id)
+
+  orders = None
+  if(request.user.is_superuser):
+    orders = Order.objects.filter()
+  else:
+    orders = Order.objects.filter(customer__pk=request.user.customer.id)
+    
   return render(request, 'user.html', {
     "addresses": addresses,
     "orders": orders

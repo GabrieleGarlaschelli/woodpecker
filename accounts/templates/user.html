@@ -251,14 +251,15 @@
       </div>
       <div class="row">
         <div class="col">
-          {% include 'orders_section.html' with orders=orders %}
+          {% include 'admin_orders_section.html' with orders=orders %}
         </div>
       </div>
     </div>
   {% endif %}
-{% if user.is_authenticated %}
-    {% include 'woodworks/floating_chat.html' with messages=messages %}
-{% endif %}
+
+  {% if user.is_authenticated %}
+      {% include 'woodworks/floating_chat.html' with messages=messages %}
+  {% endif %}
 
   <style>
     .list-group-item {

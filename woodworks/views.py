@@ -48,7 +48,10 @@ def order(request, woodwork_id):
   expiration_date = datetime.datetime.strptime(expiration_date,"%d/%m/%Y").date()
   address_id = request.POST.get('address')
   success = order_woodwork(woodwork_id, request.user.customer.id, notes, quantity, expiration_date, address_id)
-  return render(request, 'woodworks/order_successful.html')
+  if success:
+    return render(request, 'woodworks/order_successful.html')
+  else:
+    return render(request, 'woodworks/order_failed.html')
 
 @login_required
 def is_liked(request, woodwork_id):
@@ -83,7 +86,8 @@ def list(request):
   })
 
 def update_order_status(order_id):
-  update_woodwork_order_status(order_id)
+  status = request.POST['status']
+  update_woodwork_order_status(order_id, status)
   return JsonResponse({'result': True})
 
 def about_us(request): 
