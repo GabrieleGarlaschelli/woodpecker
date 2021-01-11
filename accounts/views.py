@@ -50,6 +50,8 @@ def user_detail(request):
     orders = Order.objects.filter()
   else:
     orders = Order.objects.filter(customer__pk=request.user.customer.id)
+
+  orders = orders.order_by('order_at')
     
   return render(request, 'user.html', {
     "addresses": addresses,
