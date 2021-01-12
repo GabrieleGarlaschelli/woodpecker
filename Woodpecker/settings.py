@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1@4_+6cu7is98a49hbs#&f=p_-&phry%*oh3=(j+pctp9kb3d@'
+SECRET_KEY = os.getenv('SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/woodworks/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.getenv('STATIC_ROOT')
 
 LOGIN_REDIRECT_URL  =  '/'
 
