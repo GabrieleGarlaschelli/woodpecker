@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  {% for order in orders %}
+    <div class="row my-3">
+      <div class="col-md-2">
+        {% include 'components/order_woodwork_card.html' with woodwork=order.woodwork %}
+      </div>
+      <div class="col-md-10">
+        <!-- # TODO use constant from models -->
+        <ul class="stepper stepper-horizontal my-0">
+          <li class="{% if order.status == 'received' %} active {% endif %}">
+            <a class="{{order.id}}-change-order-button" order-status="received">
+              <span class="label">Ricevuto</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'confirmed' %} active {% endif %}">
+            <a class="{{order.id}}-change-order-button" order-status="confirmed">
+              <span class="label">Confermato</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'pending' %} active {% endif %}">
+            <a class="{{order.id}}-change-order-button" order-status="pending">
+              <span class="label">Lavoro in corso</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'done' %} active {% endif %}">
+            <div class="spinner-border" id="spinnerOn" style="visibility: hidden;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <a class="{{order.id}}-change-order-button" order-status="done" id="loading">
+              <span class="label">Fatto, in attesa di consegna</span>
+            </a>
+          </li>
+          <li class="{% if order.status == 'delivered' %} active {% endif %}">
+            <a class="{{order.id}}-change-order-button" order-status="delivered">
+              <span class="label">Consegnato</span>
+            </a>
+          </li>
+        </ul>
+        <div class="csrf-token-{{order.id}}">
+          {% csrf_token %}
+        </div>
+        <div>
+          <b>Cliente:</b> {{order.customer.fullname}}
+        </div>
+        <div>
+          <b>Quantità:</b> {{order.quantity}}
+        </div>
+        <div>
+          <b>Email:</b> {{order.customer.user.email}}
+        </div>
+        <div>
+          <b>Scadenza:</b> {{order.expiration_on}}
+        </div>
+        <div>
+          <b>Note sulla realizzazione:</b> {{order.notes}}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(".loading").on('click', function() {
+        $("#spinnerOn").css("visibility","visible");
+        setTimeout(() => { $("#test").css("visibility", "hidden"); }, 2000);
+      })
+
+      $(document).ready(function () {
+        $(".{{order.id}}-change-order-button").on('click', function (event) {
+          status = $(this).attr('order-status')
+          $.ajax({
+            url: "{% url 'update_order_status' order.id %}",
+            method: "POST",
+            data: {
+              status: status,
+              csrfmiddlewaretoken: $($('.csrf-token-{{order.id}}').children()[0]).val()
+            }
+          }).done(function (data) {
+            window.location.reload()
+          })
+        })
+      })
+    </script>
+  {% endfor %}
+</div>

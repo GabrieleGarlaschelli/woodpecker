@@ -5,96 +5,136 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container-fluid mt-3" style="width: 100%;">
-    <div class="row">
-      <div class="col">
-        <h3>
-          Benvenuto, {{user.first_name}} {{user.last_name}} 
-          <button type="button" class="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#editUser">
-            <i class="far fa-edit" aria-hidden="true"></i>
-          </button>
-          <div class="modal fade" id="editUser" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modifica Utente</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  {% include 'user_form.html' %}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
-                  <button type="button" class="btn btn-primary border-rounded user-edit-submit-button">Salva</button>
-                </div>
+  {% if not user.is_superuser %}
+    <div class="container-fluid mt-3" style="width: 100%;">
+      <div class="row">
+        <div class="col">
+          <h3>
+            Benvenuto, {{user.first_name}} {{user.last_name}} 
+            <button type="button" class="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#editUser">
+              <i class="far fa-edit" aria-hidden="true"></i>
+            </button>
+            <div class="modal fade" id="editUser" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Modifica Utente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {% include 'user_form.html' %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary border-rounded user-edit-submit-button">Salva</button>
+                  </div>
 
-                <script>
-                  $('.datepicker').datepicker({
-                      format: "dd/mm/yyyy"
-                    });
+                  <script>
+                    $('.datepicker').datepicker({
+                        format: "dd/mm/yyyy"
+                      });
 
-                  $('.user-edit-submit-button').on('click', function() {
-                    $("#userEditForm").submit()
-                  })
-                </script>
+                    $('.user-edit-submit-button').on('click', function() {
+                      $("#userEditForm").submit()
+                    })
+                  </script>
+                </div>
               </div>
             </div>
-          </div>
-          <span class="" style="font-size: 12pt;"><em>Non sei {{user.first_name}}?</em> <a href="{% url 'logout' %}">Esci</a></span>
-        </h3>
-      </div>
-    </div>
-    <hr style="margin-top: 0px" />
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <h6>I tuoi dati:</h6>
-        <div>
-          <ul class="list-group my-3">
-            <li class="list-group-item">
-              <span style="float: left">Email</span><span style="float: right">{{user.email}}</span>
-            </li>
-            <li class="list-group-item">
-              <span style="float: left">Username</span><span style="float: right">{{user.username}}</span>
-            </li>
-            <li class="list-group-item">
-              <span style="float: left">Compleanno</span><span style="float: right">{{user.customer.birthday}}</span>
-            </li>
-          </ul>
+            <span class="" style="font-size: 12pt;"><em>Non sei {{user.first_name}}?</em> <a href="{% url 'logout' %}">Esci</a></span>
+          </h3>
         </div>
       </div>
-      <div class="col-12 col-md-6 mb-4">
-        <h6>I tuoi indirizzi:</h6>
-        <div class="d-flex flex-wrap">
-          {% for address in addresses %}
-            <div class="card address-color mx-2" style="max-width: 200px;">
-              <div class="card-body transparent p-2">
-                {{address.address}},<br> {{address.city}} ({{address.county}}), {{address.postal_code}}<br>
-                {{address.firstname}} {{address.lastname}}
+      <hr style="margin-top: 0px" />
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <h6>I tuoi dati:</h6>
+          <div>
+            <ul class="list-group my-3">
+              <li class="list-group-item">
+                <span style="float: left">Email</span><span style="float: right">{{user.email}}</span>
+              </li>
+              <li class="list-group-item">
+                <span style="float: left">Username</span><span style="float: right">{{user.username}}</span>
+              </li>
+              <li class="list-group-item">
+                <span style="float: left">Compleanno</span><span style="float: right">{{user.customer.birthday}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+          <h6>I tuoi indirizzi:</h6>
+          <div class="d-flex flex-wrap">
+            {% for address in addresses %}
+              <div class="card address-color mx-2" style="max-width: 200px;">
+                <div class="card-body transparent p-2">
+                  {{address.address}},<br> {{address.city}} ({{address.county}}), {{address.postal_code}}<br>
+                  {{address.firstname}} {{address.lastname}}
+                </div>
+                <div>
+                  <span class="mr-2" style="float: right">
+                    <a style="color: grey" data-toggle="modal" data-target="#editAddress-{{address.id}}">
+                      <i class="far fa-edit" aria-hidden="true"></i>
+                    </a>
+                  </span>
+                </div>
+                <div class="modal fade" id="editAddress-{{address.id}}" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Modifica Indirizzo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        {% include 'address_form.html' with address=address %}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-primary border-rounded {{address.id}}-address-edit-submit-button">Salva</button>
+                      </div>
+                
+                      <script>
+                        $('.datepicker').datepicker({
+                          format: "dd/mm/yyyy"
+                        });
+
+                        $('.{{address.id}}-address-edit-submit-button').on('click', function () {
+                          $("#addressEditForm{{address.id}}").submit()
+                        })
+                      </script>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span class="mr-2" style="float: right">
-                  <a style="color: grey" data-toggle="modal" data-target="#editAddress-{{address.id}}">
-                    <i class="far fa-edit" aria-hidden="true"></i>
-                  </a>
-                </span>
-              </div>
-              <div class="modal fade" id="editAddress-{{address.id}}" tabindex="-1" role="dialog">
+            {% endfor %}
+            <div class="d-flex align-items-center" style="max-width: 200px;">
+              <button class="btn mx-3 address-color" 
+                style="border-radius: 50%; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px;"
+                data-toggle="modal" data-target="#createAddress">
+                <i class="fas fa-plus"></i>
+              </button>
+              <div class="modal fade" id="createAddress" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Modifica Indirizzo</h5>
+                      <h5 class="modal-title">Crea Indirizzo</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      {% include 'address_form.html' with address=address %}
+                      {% include 'address_form.html' with create=True %}
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
-                      <button type="button" class="btn btn-primary border-rounded {{address.id}}-address-edit-submit-button">Salva</button>
+                      <button type="button"
+                        data-dismiss="modal"
+                        class="btn btn-primary border-rounded address-create-submit-button">Salva</button>
                     </div>
               
                     <script>
@@ -102,88 +142,124 @@
                         format: "dd/mm/yyyy"
                       });
 
-                      $('.{{address.id}}-address-edit-submit-button').on('click', function () {
-                        $("#addressEditForm{{address.id}}").submit()
+                      $('.address-create-submit-button').on('click', function () {
+                        $("#addressCreateForm").submit()
                       })
                     </script>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <h3>I miei Woodwork Preferiti</h3>
+          <hr />
+        </div>
+      </div>
+      <div class="d-flex flex-wrap row" style="width: 100vw; overflow-x: auto;">
+        {% if user.liked_woodworks.all|length == 0 %}
+          <div class="text-center my-3" style="width: 100vw; font-style: italic; color: #7d7d7d;">Ancora nessun preferito! per aggiungerli basta cliccare il <i class="far fa-heart mx-1" aria-hidden="true"></i> sui woodworks</div>
+        {% else %}
+          {% for woodwork in user.liked_woodworks.all %}
+            <div style="max-width: 400px; min-width: 300px" class="m-3">
+              {% include 'components/woodwork_card.html' with woodwork=woodwork %}
+            </div>
           {% endfor %}
-          <div class="d-flex align-items-center" style="max-width: 200px;">
-            <button class="btn mx-3 address-color" 
-              style="border-radius: 50%; padding-top: 10px; padding-bottom: 10px; padding-left: 15px; padding-right: 15px;"
-              data-toggle="modal" data-target="#createAddress">
-              <i class="fas fa-plus"></i>
+        {% endif %}
+      </div>
+      <div class="row mt-5">
+        <div class="col">
+          <h3>I miei ordini</h3>
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {% include 'orders_section.html' with orders=orders %}
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="container-fluid mt-3" style="width: 100%;">
+      <div class="row">
+        <div class="col">
+          <h3>
+            Benvenuto, {{user.first_name}} {{user.last_name}} 
+            <button type="button" class="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#editUser">
+              <i class="far fa-edit" aria-hidden="true"></i>
             </button>
-            <div class="modal fade" id="createAddress" tabindex="-1" role="dialog">
+            <div class="modal fade" id="editUser" tabindex="-1" role="dialog">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title">Crea Indirizzo</h5>
+                    <h5 class="modal-title">Modifica Utente</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                    {% include 'address_form.html' with create=True %}
+                    {% include 'user_form.html' %}
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn border-rounded" data-dismiss="modal">Chiudi</button>
-                    <button type="button"
-                      data-dismiss="modal"
-                      class="btn btn-primary border-rounded address-create-submit-button">Salva</button>
+                    <button type="button" class="btn btn-primary border-rounded user-edit-submit-button">Salva</button>
                   </div>
-            
+
                   <script>
                     $('.datepicker').datepicker({
-                      format: "dd/mm/yyyy"
-                    });
+                        format: "dd/mm/yyyy"
+                      });
 
-                    $('.address-create-submit-button').on('click', function () {
-                      $("#addressCreateForm").submit()
+                    $('.user-edit-submit-button').on('click', function() {
+                      $("#userEditForm").submit()
                     })
                   </script>
                 </div>
               </div>
             </div>
+            <span class="" style="font-size: 12pt;"><em>Non sei {{user.first_name}}?</em> <a href="{% url 'logout' %}">Esci</a></span>
+          </h3>
+        </div>
+      </div>
+      <hr style="margin-top: 0px" />
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <h6>I tuoi dati:</h6>
+          <div>
+            <ul class="list-group my-3">
+              <li class="list-group-item">
+                <span style="float: left">Email</span><span style="float: right">{{user.email}}</span>
+              </li>
+              <li class="list-group-item">
+                <span style="float: left">Username</span><span style="float: right">{{user.username}}</span>
+              </li>
+              <li class="list-group-item">
+                <span style="float: left">Compleanno</span><span style="float: right">{{user.customer.birthday}}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5">
-      <div class="col">
-        <h3>I miei Woodwork Preferiti</h3>
-        <hr />
+      <div class="row mt-5">
+        <div class="col">
+          <h3>Ordini effettuati</h3>
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {% include 'admin_orders_section.html' with orders=orders %}
+        </div>
       </div>
     </div>
-    <div class="d-flex flex-wrap row" style="width: 100vw; overflow-x: auto;">
-      {% if user.liked_woodworks.all|length == 0 %}
-        <div class="text-center my-3" style="width: 100vw; font-style: italic; color: #7d7d7d;">Ancora nessun preferito! per aggiungerli basta cliccare il <i class="far fa-heart mx-1" aria-hidden="true"></i> sui woodworks</div>
-      {% else %}
-        {% for woodwork in user.liked_woodworks.all %}
-          <div style="max-width: 400px; min-width: 300px" class="m-3">
-            {% include 'components/woodwork_card.html' with woodwork=woodwork %}
-          </div>
-        {% endfor %}
-      {% endif %}
-    </div>
-    <div class="row mt-5">
-      <div class="col">
-        <h3>I miei ordini</h3>
-        <hr />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        {% include 'orders_section.html' with orders=orders %}
-      </div>
-    </div>
-  </div>
-{% if user.is_authenticated %}
-    {% include 'woodworks/floating_chat.html' with messages=messages %}
-{% endif %}
+  {% endif %}
+
+  {% if user.is_authenticated %}
+      {% include 'woodworks/floating_chat.html' with messages=messages %}
+  {% endif %}
 
   <style>
     .list-group-item {

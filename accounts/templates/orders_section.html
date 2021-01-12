@@ -1,6 +1,6 @@
 <div class="container-fluid">
   {% for order in orders %}
-    <div class="row">
+    <div class="row my-3">
       <div class="col-md-2">
         {% include 'components/order_woodwork_card.html' with woodwork=order.woodwork %}
       </div>
@@ -33,6 +33,15 @@
             </a>
           </li>
         </ul>
+        <div>
+          <b>Quantità:</b> {{order.quantity}}
+        </div>
+        <div>
+          <b>Scadenza:</b> {{order.expiration_on}}
+        </div>
+        <div>
+          <b>Note sulla realizzazione:</b> {{order.notes}}
+        </div>
       </div>
     </div>
   {% endfor %}
