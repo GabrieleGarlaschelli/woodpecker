@@ -41,11 +41,12 @@
       </div>
       <div class="col-9">
         <select name="address" required class="browser-default custom-select">
-          {% for address in addresses %}
+          {% for address in user.customer.address_set.all %}
             <option value="{{address.id}}">{{address.address}}</option>
           {% endfor %}
         </select>
       </div>
+      <!-- {{user.customer.address_set.all}} -->
     </div>
   </div>
 </form>
