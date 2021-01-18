@@ -83,7 +83,9 @@
           <span class="woodwork-ratings" data-rating-value="{{avarage_rating}}"></span>
           <span style="margin-left: 10px">{{avarage_rating}} su 5</span>
         </div>
-        <button class="btn btn-primary border-rounded" data-toggle="modal" data-target="#rateWoodwork-{{woodwork.id}}">Recensisci</button>
+        {% if user.is_authenticated %}
+          <button class="btn btn-primary border-rounded" data-toggle="modal" data-target="#rateWoodwork-{{woodwork.id}}">Recensisci</button>
+        {% endif %}
         <div class="modal fade" id="rateWoodwork-{{woodwork.id}}" tabindex="-1" role="dialog">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
