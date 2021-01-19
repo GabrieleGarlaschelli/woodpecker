@@ -27,7 +27,7 @@ class TestFormsRegistration(TestCase):
             'password2': 'ciao14$'
         })
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['password2'], ['The two password fields didn\'t match.'])
+        self.assertEqual(form.errors['password2'][0], 'The two password fields didn’t match.')
 
     #test con inserimento della mail in formato errato
     def test_create_user_form_email_not_valid(self):
