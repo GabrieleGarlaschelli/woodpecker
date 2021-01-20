@@ -8,11 +8,11 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 302)
     
     def test_detail(self):
-        response = self.client.get(reverse('woodwork_detail'))
+        response = self.client.get(reverse('woodwork_detail', args=[1]))
         self.assertEquals(response.status_code, 200)
 
     def test_rate(self):
-        response = self.client.get(reverse('rate'))
+        response = self.client.get(reverse('rate', args=[1]))
         self.assertEquals(response.status_code, 200)
 
     # def test_order(self):
@@ -20,10 +20,10 @@ class TestViews(TestCase):
     #     self.assertEquals(response.status_code, 200)
 
     def test_is_liked(self):
-        response = self.client.get(reverse('is_liked'))
-        self.assertEquals(response.status_code, 200)
+        response = self.client.get(reverse('is_liked', args=[1]))
+        self.assertEquals(response.status_code, 302)
 
     def test_like(self):
-        response = self.client.get(reverse('like'))
-        self.assertEquals(response.status_code, 200)
+        response = self.client.get(reverse('like', args=[1]))
+        self.assertEquals(response.status_code, 302)
         
