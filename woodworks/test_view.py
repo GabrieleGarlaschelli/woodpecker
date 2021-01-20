@@ -5,7 +5,7 @@ from accounts.models import CustomUser, Customer
 import datetime
 from django.utils import timezone
 
-
+#qui eseguiamo i test chiamata url di alcune view
 class TestViews(TestCase):
     def setUp(self):
         Woodwork.objects.create(id=1, title="lion", description="roar", publication_date=datetime.datetime.now(tz=timezone.utc), created_at=datetime.datetime.now(tz=timezone.utc))
