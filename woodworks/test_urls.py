@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse, resolve
 
-from woodworks.views import detail, order, like, update_order_status, about_us, rate, unlike
+from woodworks.views import detail, order, like, update_order_status, about_us, rate, unlike, list
 
 #qui eseguiamo i test per gli urls
 class TestUrls(TestCase):
@@ -10,9 +10,9 @@ class TestUrls(TestCase):
         url = reverse('woodwork_detail', args=[1])
         self.assertEqual(resolve(url).func, detail)
 
-    # def test_listaWoodwork(self):
-    #     url = reverse('woodworks:list')
-    #     self.assertEqual(resolve(url).func, list)
+    def test_listaWoodwork(self):
+        url = reverse('list')
+        self.assertEqual(resolve(url).func, list)
 
     def test_formOrdina(self):
         url = reverse('order', args=[1])
